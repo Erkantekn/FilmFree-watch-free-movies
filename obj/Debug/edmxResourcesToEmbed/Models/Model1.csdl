@@ -1,0 +1,291 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FilmFreeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="FilmFreeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BildirilenHatalar" EntityType="FilmFreeModel.BildirilenHatalar" />
+    <EntitySet Name="Film" EntityType="FilmFreeModel.Film" />
+    <EntitySet Name="FilmTur" EntityType="FilmFreeModel.FilmTur" />
+    <EntitySet Name="GonderilenMailler" EntityType="FilmFreeModel.GonderilenMailler" />
+    <EntitySet Name="GonderilenMailTipleri" EntityType="FilmFreeModel.GonderilenMailTipleri" />
+    <EntitySet Name="IframeTablosu" EntityType="FilmFreeModel.IframeTablosu" />
+    <EntitySet Name="IletisimFormu" EntityType="FilmFreeModel.IletisimFormu" />
+    <EntitySet Name="Kullanicilar" EntityType="FilmFreeModel.Kullanicilar" />
+    <EntitySet Name="sysdiagrams" EntityType="FilmFreeModel.sysdiagrams" />
+    <EntitySet Name="Yorumlar" EntityType="FilmFreeModel.Yorumlar" />
+    <AssociationSet Name="FK_BildirilenHatalar_Film" Association="FilmFreeModel.FK_BildirilenHatalar_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="BildirilenHatalar" EntitySet="BildirilenHatalar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IframeTablosu_Film" Association="FilmFreeModel.FK_IframeTablosu_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="IframeTablosu" EntitySet="IframeTablosu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yorumlar_Film" Association="FilmFreeModel.FK_Yorumlar_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="Yorumlar" EntitySet="Yorumlar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GonderilenMailler_GonderilenMailTipleri" Association="FilmFreeModel.FK_GonderilenMailler_GonderilenMailTipleri">
+      <End Role="GonderilenMailTipleri" EntitySet="GonderilenMailTipleri" />
+      <End Role="GonderilenMailler" EntitySet="GonderilenMailler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GonderilenMailler_Kullanicilar" Association="FilmFreeModel.FK_GonderilenMailler_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="GonderilenMailler" EntitySet="GonderilenMailler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yorumlar_Kullanicilar" Association="FilmFreeModel.FK_Yorumlar_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="Yorumlar" EntitySet="Yorumlar" />
+    </AssociationSet>
+    <AssociationSet Name="BegenilerTablosu" Association="FilmFreeModel.BegenilerTablosu">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+    </AssociationSet>
+    <AssociationSet Name="TurEslestirmeTablosu" Association="FilmFreeModel.TurEslestirmeTablosu">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="FilmTur" EntitySet="FilmTur" />
+    </AssociationSet>
+    <EntitySet Name="anasayfaSlayt" EntityType="FilmFreeModel.anasayfaSlayt" />
+    <AssociationSet Name="FK_anasayfaSlayt_Film" Association="FilmFreeModel.FK_anasayfaSlayt_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="anasayfaSlayt" EntitySet="anasayfaSlayt" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="BildirilenHatalar">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="filmId" Type="Int32" Nullable="false" />
+    <Property Name="Aciklama" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Tarih" Type="DateTime" Precision="3" />
+    <Property Name="incelendiMi" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Film" Relationship="FilmFreeModel.FK_BildirilenHatalar_Film" FromRole="BildirilenHatalar" ToRole="Film" />
+  </EntityType>
+  <EntityType Name="Film">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Isim" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SureDK" Type="Int32" Nullable="false" />
+    <Property Name="YayınTarihi" Type="DateTime" Precision="3" />
+    <Property Name="ResimYol" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Icerik" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="Oyuncular" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Tags" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="IzlenmeSayisi" Type="Int32" Nullable="false" />
+    <Property Name="YorumSayisi" Type="Int32" Nullable="false" />
+    <Property Name="BegenilmeSayisi" Type="Int32" Nullable="false" />
+    <Property Name="eklenmeTarihi" Type="DateTime" Precision="3" />
+    <Property Name="IMDB" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+    <Property Name="ErisimEngelli" Type="Boolean" Nullable="false" />
+    <Property Name="Dil" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BildirilenHatalar" Relationship="FilmFreeModel.FK_BildirilenHatalar_Film" FromRole="Film" ToRole="BildirilenHatalar" />
+    <NavigationProperty Name="IframeTablosu" Relationship="FilmFreeModel.FK_IframeTablosu_Film" FromRole="Film" ToRole="IframeTablosu" />
+    <NavigationProperty Name="Yorumlar" Relationship="FilmFreeModel.FK_Yorumlar_Film" FromRole="Film" ToRole="Yorumlar" />
+    <NavigationProperty Name="Kullanicilar" Relationship="FilmFreeModel.BegenilerTablosu" FromRole="Film" ToRole="Kullanicilar" />
+    <NavigationProperty Name="FilmTur" Relationship="FilmFreeModel.TurEslestirmeTablosu" FromRole="Film" ToRole="FilmTur" />
+    <NavigationProperty Name="anasayfaSlayt" Relationship="FilmFreeModel.FK_anasayfaSlayt_Film" FromRole="Film" ToRole="anasayfaSlayt" />
+  </EntityType>
+  <EntityType Name="FilmTur">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TurAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Film" Relationship="FilmFreeModel.TurEslestirmeTablosu" FromRole="FilmTur" ToRole="Film" />
+  </EntityType>
+  <EntityType Name="GonderilenMailler">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="KullaniciId" Type="Int32" Nullable="false" />
+    <Property Name="GonderimTipiId" Type="Int32" Nullable="false" />
+    <Property Name="GonderimZamani" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IslemGerceklestiMi" Type="Boolean" Nullable="false" />
+    <Property Name="token" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="GonderilenMailTipleri" Relationship="FilmFreeModel.FK_GonderilenMailler_GonderilenMailTipleri" FromRole="GonderilenMailler" ToRole="GonderilenMailTipleri" />
+    <NavigationProperty Name="Kullanicilar" Relationship="FilmFreeModel.FK_GonderilenMailler_Kullanicilar" FromRole="GonderilenMailler" ToRole="Kullanicilar" />
+  </EntityType>
+  <EntityType Name="GonderilenMailTipleri">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TipAdi" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ZamanAsimiSuresiDKCinsi" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="GonderilenMailler" Relationship="FilmFreeModel.FK_GonderilenMailler_GonderilenMailTipleri" FromRole="GonderilenMailTipleri" ToRole="GonderilenMailler" />
+  </EntityType>
+  <EntityType Name="IframeTablosu">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kaynakIsmi" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+    <Property Name="kaynakLinki" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="VarsaTrAltyazi" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="VarsaTrDublaj" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="filmId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Film" Relationship="FilmFreeModel.FK_IframeTablosu_Film" FromRole="IframeTablosu" ToRole="Film" />
+  </EntityType>
+  <EntityType Name="IletisimFormu">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Mail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Konu" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Mesaj" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="OkunduMu" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kullanicilar">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kAdi" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Mail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Sifre" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Dogrulama" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="MailOnayliMi" Type="Boolean" Nullable="false" />
+    <Property Name="Yetki" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+    <Property Name="KayitTarihi" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="BAN" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="GonderilenMailler" Relationship="FilmFreeModel.FK_GonderilenMailler_Kullanicilar" FromRole="Kullanicilar" ToRole="GonderilenMailler" />
+    <NavigationProperty Name="Yorumlar" Relationship="FilmFreeModel.FK_Yorumlar_Kullanicilar" FromRole="Kullanicilar" ToRole="Yorumlar" />
+    <NavigationProperty Name="Film" Relationship="FilmFreeModel.BegenilerTablosu" FromRole="Kullanicilar" ToRole="Film" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Yorumlar">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="filmId" Type="Int32" Nullable="false" />
+    <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Yorum" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="onayliMi" Type="Boolean" Nullable="false" />
+    <Property Name="onaylayanId" Type="Int32" />
+    <Property Name="onaylanmaTarihi" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Film" Relationship="FilmFreeModel.FK_Yorumlar_Film" FromRole="Yorumlar" ToRole="Film" />
+    <NavigationProperty Name="Kullanicilar" Relationship="FilmFreeModel.FK_Yorumlar_Kullanicilar" FromRole="Yorumlar" ToRole="Kullanicilar" />
+  </EntityType>
+  <Association Name="FK_BildirilenHatalar_Film">
+    <End Type="FilmFreeModel.Film" Role="Film" Multiplicity="1" />
+    <End Type="FilmFreeModel.BildirilenHatalar" Role="BildirilenHatalar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BildirilenHatalar">
+        <PropertyRef Name="filmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IframeTablosu_Film">
+    <End Type="FilmFreeModel.Film" Role="Film" Multiplicity="1" />
+    <End Type="FilmFreeModel.IframeTablosu" Role="IframeTablosu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="IframeTablosu">
+        <PropertyRef Name="filmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yorumlar_Film">
+    <End Type="FilmFreeModel.Film" Role="Film" Multiplicity="1" />
+    <End Type="FilmFreeModel.Yorumlar" Role="Yorumlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Yorumlar">
+        <PropertyRef Name="filmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GonderilenMailler_GonderilenMailTipleri">
+    <End Type="FilmFreeModel.GonderilenMailTipleri" Role="GonderilenMailTipleri" Multiplicity="1" />
+    <End Type="FilmFreeModel.GonderilenMailler" Role="GonderilenMailler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GonderilenMailTipleri">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="GonderilenMailler">
+        <PropertyRef Name="GonderimTipiId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GonderilenMailler_Kullanicilar">
+    <End Type="FilmFreeModel.Kullanicilar" Role="Kullanicilar" Multiplicity="1" />
+    <End Type="FilmFreeModel.GonderilenMailler" Role="GonderilenMailler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="GonderilenMailler">
+        <PropertyRef Name="KullaniciId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yorumlar_Kullanicilar">
+    <End Type="FilmFreeModel.Kullanicilar" Role="Kullanicilar" Multiplicity="0..1" />
+    <End Type="FilmFreeModel.Yorumlar" Role="Yorumlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Yorumlar">
+        <PropertyRef Name="onaylayanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BegenilerTablosu">
+    <End Type="FilmFreeModel.Film" Role="Film" Multiplicity="*" />
+    <End Type="FilmFreeModel.Kullanicilar" Role="Kullanicilar" Multiplicity="*" />
+  </Association>
+  <Association Name="TurEslestirmeTablosu">
+    <End Type="FilmFreeModel.Film" Role="Film" Multiplicity="*" />
+    <End Type="FilmFreeModel.FilmTur" Role="FilmTur" Multiplicity="*" />
+  </Association>
+  <EntityType Name="anasayfaSlayt">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="filmId" Type="Int32" Nullable="false" />
+    <Property Name="onerimSekli" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="resimYoluHD" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Name="resimYoluHD_2" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Film" Relationship="FilmFreeModel.FK_anasayfaSlayt_Film" FromRole="anasayfaSlayt" ToRole="Film" />
+  </EntityType>
+  <Association Name="FK_anasayfaSlayt_Film">
+    <End Type="FilmFreeModel.Film" Role="Film" Multiplicity="1" />
+    <End Type="FilmFreeModel.anasayfaSlayt" Role="anasayfaSlayt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="anasayfaSlayt">
+        <PropertyRef Name="filmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

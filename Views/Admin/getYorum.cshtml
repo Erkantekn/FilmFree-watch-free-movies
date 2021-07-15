@@ -1,0 +1,65 @@
+﻿@model FilmFree.Models.Yorumlar
+
+<table id="yorumDetay">
+    <tr>
+        <td>id:</td>
+        <td>@Model.id</td>
+    </tr>
+    <tr>
+        <td>Film id - İsmi:</td>
+        <td>@Model.filmId - @Model.Film.Isim</td>
+    </tr>
+    <tr>
+        <td>Ad:</td>
+        <td>@Model.Ad</td>
+    </tr>
+    <tr>
+        <td>Mail:</td>
+        <td>@Model.Mail</td>
+    </tr>
+    <tr>
+        <td>Yorum:</td>
+        <td><p>@Model.Yorum</p></td>
+    </tr>
+    <tr>
+        <td>Tarih</td>
+        <td>@Model.Tarih.ToString()</td>
+    </tr>
+    <tr>
+        <td>Onay Durumu:</td>
+        @if (Model.onayliMi)
+        {
+            <td>
+               Onaylı. <a class="btn btn-danger yorum-sil-tekli" href="javascript:;" data-id="@Model.id">Sil</a>
+            </td>
+        }
+        else
+        {
+            <td>
+                <a class="btn btn-primary yorum-onayla-tekli" href="javascript:;" data-id="@Model.id">Onayla</a> <a class="btn btn-danger yorum-sil-tekli" href="javascript:;" data-id="@Model.id">Sil</a>
+            </td>
+        }
+
+    </tr>
+    @if (User.IsInRole("C"))
+    {
+        if (Model.onaylayanId != null)
+        {
+            <tr>
+                <td>Onaylayan:</td>
+                <td>@Model.Kullanicilar.kAdi</td>
+                
+            </tr>
+        }
+        if (Model.onaylanmaTarihi!=null)
+        {
+            <tr>
+                <td>Onaylanma Tarihi:</td>
+                <td>@Model.onaylanmaTarihi.ToString()</td>
+            </tr>
+        }
+
+
+    }
+
+</table>

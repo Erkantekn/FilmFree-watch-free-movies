@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Film Erişim Ayaları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .dropdown.form-control{
+        margin:10px;
+    }
+    .row a{
+        margin-left:10px;   
+    }
+</style>
+<section>
+    <div class="container-fluid" id="erisim">
+        <div class="row">
+
+            
+                @Html.DropDownList("ErisimAcik", (IEnumerable<SelectListItem>)ViewData["ErisimAcik"], "Erişime Kapatmak İstediğiniz Filmi Seçiniz", new { @class = "dropdown form-control" ,@onchange="erisimAcikChange(this)"})
+            
+                <a href="javascript:;" class="btn btn-success erisim-kapat">Seçilen Filmi Erişime Kapat</a>
+            
+                @Html.DropDownList("ErisimKapali", (IEnumerable<SelectListItem>)ViewData["ErisimKapali"], "Erişime Açmak İstediğiniz Filmi Seçiniz", new { @class = "dropdown form-control", @onchange = "erisimKapaliChange(this)" })
+            
+                
+                <a href="javascript:;" class="btn  btn-danger erisim-ac">Seçilen Filmi Erişime Aç</a>
+            
+                </div>
+            </div>
+</section>
+@section script{
+    <script>
+        var ac=0;
+        var kapat = 0;
+        function erisimAcikChange(e) {
+            kapat = $(e).val();
+        }
+        function erisimKapaliChange(e) {
+            ac = $(e).val();
+        }
+        $('#erisim').on('click', '.erisim-ac', function () {
+            if (ac != 0 && ac != null) {
+                var btn = $(this);
+            $.ajax({
+                type: "GET",
+                url: "/Admin/ErisimAc?id="+ac,
+                success: function (e) {
+                    btn.text("Seçilen Film Erişime Açıldı");
+
+                    $("#ErisimAcik").append(new Option($("#ErisimKapali option[value=" + ac + "]").text(), ac));
+                    $("#ErisimKapali option[value=" + ac + "]").remove();
+                    
+
+                }, error: function () {
+                    btn.text("Seçilen Film Erişime Açılırken Hata Oluştu");
+                }
+            });
+
+            }
+
+        });
+        $('#erisim').on('click', '.erisim-kapat', function () {
+            if (kapat != 0 && kapat != null) {
+                var btn = $(this);
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Admin/ErisimKapat?id=" + kapat,
+                    success: function (e) {
+                        btn.text("Seçilen Film Erişime Kapandı");
+                        $("#ErisimKapali").append(new Option($("#ErisimAcik option[value=" + kapat + "]").text(), kapat));
+                        $("#ErisimAcik option[value=" + kapat + "]").remove();
+                    }, error: function () {
+                        btn.text("Seçilen Film Erişime Kapanırken Hata Oluştu");
+                    }
+                });
+
+            }
+
+        });
+    </script>
+    }

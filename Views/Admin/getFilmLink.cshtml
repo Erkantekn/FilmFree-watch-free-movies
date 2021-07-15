@@ -1,0 +1,31 @@
+﻿@model List<FilmFree.Models.IframeTablosu>
+
+
+   
+
+        <table style="margin:15px;">
+            <thead>
+                <tr>
+                    <th>Kaynak İsmi</th>
+                    <th>Tek Link</th>
+                    <th>Varsa Altyazı Linki</th>
+                    <th>Varsa Dublaj Linki</th>
+                    <th>Sil</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.kaynakIsmi</td>
+                        <td>@item.kaynakLinki</td>
+                        <td>@item.VarsaTrAltyazi</td>
+                        <td>@item.VarsaTrDublaj</td>
+                        <td><a class="btn btn-danger btn-block linki-sil" href="javascript:;" data-id="@item.id">Linki Sil</a></td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    
+    <a class="btn btn-success yeni-link" href="javascript:;">Yeni Link Ekle</a>

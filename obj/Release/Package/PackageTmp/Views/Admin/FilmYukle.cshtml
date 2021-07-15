@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "Film Yükle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section script{
+    <link href="~/css/bootstrap-tagsinput.css" rel="stylesheet" />
+    <script src="~/js/bootstrap-tagsinput.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.bootstrap-tagsinput input').hide();
+          
+
+        });
+        function TurRefresh() {
+            var tur = $('#tur');
+            
+            tur.tagsinput('add', $('#filmTurListesi option:selected').text());
+            tur.tagsinput('refresh');
+            console.log($('#tur').tagsinput('items'));
+            console.log($('#tur').val());
+        }
+        
+        
+
+    </script>
+}
+<style>
+    .forms input, .forms select {
+        margin: 10px;
+    }
+    .bootstrap-tagsinput {
+        background-color: #182031 !important;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        display: block;
+        padding: 15px   !important;
+        color: #555;
+        vertical-align: middle;
+        border-radius: 4px;
+        max-width: 100%;
+        line-height: 22px;
+        cursor: text;
+        border:none !important;
+        width:100% !important;
+        min-height:100px !important;
+        margin-left:10px !important;
+
+    }
+
+        .bootstrap-tagsinput input {
+            border: none;
+            box-shadow: none;
+            outline: none;
+            background-color: transparent;
+            padding: 0 6px;
+            margin: 0;
+            width: auto;
+            max-width: inherit;
+        }
+        .bootstrap-tagsinput .tag.label.label-info {
+            border: 1px solid var(--primary-color);
+            margin: 5px;
+            border-radius: 5px;
+        }
+    
+</style>
+<section>
+    <div class="container-fluid">
+        <div class="row forms">
+            <!--
+                isim 100
+                sure int
+                YayınTarihi dateTime
+                Resim Yol
+                İçerik 4000
+                Oyuncular
+                Tags
+                IMDB 5
+                Dil -> dropdown TRAltyazı,TrDublaj,TrDublaj/TrAltyazı
+
+                FilmTur -> Dropdown
+                    Seçilen tür eklenecek
+
+
+
+            -->
+
+            <form action="/Admin/FilmYukle" method="post">
+                <div class="row">
+
+
+                    <div class="col-md-6">
+                        <input type="text" name="Isim" placeholder="Film ismini giriniz" required="" maxlength="100" />
+                        <input type="text" name="SureDk" placeholder="Film süresini DK cinsinden giriniz" required="" />
+                        
+                        <input type="text" name="Icerik" placeholder="Film içeriğinden bahsediniz" required maxlength="4000" />
+                        <input type="text" name="Oyuncular" placeholder="Oyuncuları virgül ile ayırarak giriniz" required maxlength="500" />
+                        <input type="text" name="Tags" placeholder="Filme ait etiket varsa giriniz" maxlength="500" />
+                        <input type="text" name="IMDB" placeholder="IMDB puanını giriniz" required maxlength="5" />
+                       
+                    </div>
+                    <div class="col-md-6">
+                        <select name="Dil" required>
+                            <option disabled selected value>Dil seçeneğini seçiniz</option>
+                            <option value="TürkçeAltyazılı">Altyazılı</option>
+                            <option value="TürkçeDublaj">Dublajlı</option>
+                            <option value="TürkçeDublaj,TürkçeAltyazılı">Hem Dublaj Hem Altyazı</option>
+                        </select>
+                        <div class="form-group row" style="padding-left:10px;">
+                            <label for="text" class="col-4 col-form-label" style="margin-top:20px;">Film Yayın Tarihi: </label>
+                            <div class="col-8">
+                                <div class="input-group">
+                                    <input type="date" name="YayınTarihi" placeholder="Film yapım tarihini giriniz" required />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="etiketler">
+                            @Html.DropDownList("filmTurListesi", (List<SelectListItem>)ViewData["filmTurListesi"], "Filme uygun türleri seçiniz", new { @class = "dropdown kategori", @onchange = "TurRefresh()" })
+                            <input type="text" value="" data-role="tagsinput" id="tur" class="form-control" name="Turs">
+                        </div>
+                        <input type="text" name="urlResim" placeholder="Film resimi URL'si" />
+                    </div>
+
+                    <div class="col-md-12"><input type="submit" class="btn btn-primary btn-block" /></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

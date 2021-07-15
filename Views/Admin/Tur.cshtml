@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Tür Ayarları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<FilmFree.Models.FilmTur>
+<style>
+    table thead {
+        background-color: var(--primary-color);
+    }
+    .name div{float:left;}
+</style>
+@section script{
+    <script>
+        $('#turTable').on('click', '.tur-sil', function () {
+            var data = $(this).data("id");
+            $('#modalTurSil .kesin-sil-tur').first().attr("data-id",data);
+
+            $('#modalTurSil ').modal("show");
+
+        });
+        $('#modalTurSil').on('click', '.btn.btn-success', function () {
+            $('#modalTurSil .kesin-sil-tur').first().attr("data-id", 0);
+            $('#modalTurSil').modal("hide");
+        });
+        $('#modalTurSil').on('click', '.kesin-sil-tur', function () {
+            var data = $(this).attr("data-id");
+            $.ajax({
+                type: "GET",
+                url: "/Admin/TurSil?id=" + data,
+                success: function (e) {
+                    $('#turTable tbody tr').each(function () {
+
+                        if ($(this).data("id") == data) {
+
+                            $(this).remove();
+                            return false;
+
+                        }
+                    });
+                    $('#modalTurSil').modal("hide");
+                }, error: function () {
+                    btn.removeClass("kesin-sil-tur");
+                    btn.text("Hata Oluştu");
+                }
+            });
+           
+           
+           
+        });
+    </script>
+    }
+<div class="modal" tabindex="-1" role="dialog" id="modalTurSil" style="z-index:3000;display:none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="color:red;font-weight: bold;">
+                Bu türü silmek istediğinizden emin misiniz?
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Dikkat! Bu türden olan tüm filmler etkilenecektir!
+               
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-danger kesin-sil-tur" href="javascript:;" data-id="0">Sil</a>
+                <a class="btn btn-success" href="javascript:;">İptal</a>
+            </div>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="container-fluid" id="turTable">
+        <div class="row">
+
+            <table class="table table-hover table-dark">
+                <thead>
+                    <tr>
+                        <th>Tür İsim</th>
+                        <th>Türe Ait Film Sayısı</th>
+                        <th>Sil</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr data-id="@item.id">
+                            <td><form method="post" action="/Admin/TurDuzenle">
+                                    <row class="name">
+                                        <div class="col-md-9"><input type="text" maxlength="50" name="TurAdi" value="@item.TurAdi"/></div>
+                                        <div class="col-md-3"><input type="submit" class="btn btn-primary btn-block" value="Kaydet" /></div>
+                                    </row>
+                            
+                                <input type="hidden" value="@item.id" name="id" />
+                                
+                                </form>
+                               
+                            </td>
+                            <td>@item.Film.Count Adet</td>
+                            <td class="sil"><a href="javascript:;" class="btn btn-danger tur-sil" data-id="@item.id">Sil</a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <form action="/Admin/TurEkle" method="post" style="margin-left:15px;">
+                <input type="text" name="TurAdi" maxlength="50" placeholder="Tür Adını Giriniz" />
+                <input type="submit" class="btn btn-success" value="Yeni tür ekle"/>
+            </form>
+
+        </div>
+    </div>
+</section>

@@ -1,0 +1,486 @@
+﻿@{
+    ViewBag.Title = "Anasayfa";
+    //Begenilen filmler için
+    bool girisYapilmis = false;
+    if ((List<int>)ViewData["begenilenFilmIdler"] != null)
+    { girisYapilmis = true; }
+}
+<!--
+    anasayfaSlayt
+    en çok izlenen
+    en çok beğenilen
+    rastgele
+
+
+
+    -->
+<!-- owl-carousel Banner Start -->
+<style>
+    .gen-movie-info div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+        font-size: 19px;
+    }
+</style>
+@if (ViewData["Slayt"] != null && ((List<FilmFree.Models.anasayfaSlayt>)ViewData["Slayt"]).Count != 0)
+{
+    <section class="pt-0 pb-0">
+        <div class="container-fluid px-0">
+            <div class="row no-gutters">
+                <div class="col-12">
+                    <div class="gen-banner-movies banner-style-2">
+                        <div class="owl-carousel owl-loaded owl-drag" data-dots="false" data-nav="true" data-desk_num="1"
+                             data-lap_num="1" data-tab_num="1" data-mob_num="1" data-mob_sm="1" data-autoplay="true"
+                             data-loop="true" data-margin="0">
+                            @foreach (var item in (List<FilmFree.Models.anasayfaSlayt>)ViewData["Slayt"])
+                            {
+
+                            <div class="item" style="background: url('/images/film/@item.resimYoluHD')">
+                                <div class="gen-movie-contain-style-2 h-100">
+                                    <div class="container h-100">
+                                        <div class="row flex-row-reverse align-items-center h-100">
+                                            <div class="col-xl-6">
+                                                <div class="gen-front-image">
+                                                    <img src="~/images/film/@item.resimYoluHD_2" alt="owl-carousel-banner-image">
+                                                    <a href="/Home/Izle?id=@item.filmId" class="playBut">
+                                                        <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In  -->
+                                                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="213.7px"
+                                                             height="213.7px" viewBox="0 0 213.7 213.7"
+                                                             enable-background="new 0 0 213.7 213.7" xml:space="preserve">
+                                                        <polygon class="triangle" id="XMLID_17_" fill="none" stroke-width="7"
+                                                                 stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                                                                 points="
+                                                            73.5,62.5 148.5,105.8 73.5,149.1 "></polygon>
+                                                        <circle class="circle" id="XMLID_18_" fill="none" stroke-width="7"
+                                                                stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                                                                cx="106.8" cy="106.8" r="103.3">
+                                             </circle>
+                                          </svg>
+                                                        <span>Şimdi İzle</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="gen-tag-line"><span>@item.onerimSekli</span></div>
+                                                <div class="gen-movie-info">
+                                                    <h3>@item.Film.Isim</h3>
+                                                </div>
+                                                <div class="gen-movie-meta-holder">
+                                                    <ul class="gen-meta-after-title">
+                                                        <li class="gen-sen-rating">
+                                                            <span>
+                                                                @item.Film.FilmTur.FirstOrDefault().TurAdi
+                                                            </span>
+                                                        </li>
+                                                        <li>
+                                                            @if (item.Film.Dil == "TürkçeDublaj")
+                                                            {
+                                                            <span>Dublaj</span>
+                                                        }
+                                                        else if (item.Film.Dil == "TürkçeAltyazılı")
+                                                        {
+                                                            <span>Altyazı</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>Dublaj / Altyazı</span>
+                                                        }
+                                                           
+                                                            </li>
+                                                        </ul>
+                                                    <div class="gen-movie-info">
+                                                        <div>
+
+                                                            @item.Film.Icerik
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="gen-meta-info">
+                                                        <ul class="gen-meta-after-excerpt">
+                                                            <li>
+                                                                <strong>OYUNCULAR :</strong>
+                                                                @item.Film.Oyuncular
+                                                            </li>
+                                                            <li>
+                                                                <strong>TÜR :</strong>
+                                                                @foreach (var tur in item.Film.FilmTur)
+                                                                {
+                                                                    <span>
+                                                                        <a href="/Home/Filtrele?Tur=@tur.id">
+                                                                            @tur.TurAdi 
+                                                                        </a>
+                                                                    </span>
+                                                                }
+
+                                                               
+                                                            </li>
+                                                            <li>
+                                                                <strong>TAG :</strong>
+                                                                <span>
+                                                                    
+                                                                        @item.Film.Tags
+                                                                    
+                                                                </span>
+                                                                
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="gen-movie-action">
+                                                    <div class="gen-btn-container">
+                                                        <a href="/Home/Izle?id=@item.filmId" class="gen-button .gen-button-dark">
+                                                            <i aria-hidden="true" class="fas fa-play"></i> <span class="text">
+                                                                Şimdi Oynat
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<!-- owl-carousel Banner End -->
+<!-- owl-carousel Videos Section-1 Start -->
+@if (ViewData["EnCokIzlenen"] != null && ((List<FilmFree.Models.Film>)ViewData["EnCokIzlenen"]).Count != 0)
+{<section class="gen-section-padding-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6">
+                    <h4 class="gen-heading-title">En Çok İzlenenler</h4>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+                    <div class="gen-movie-action">
+                        <div class="gen-btn-container text-right">
+                            <a href="/Home/Filtrele?Encok=Izlenenler" class="gen-button gen-button-flat">
+                                <span class="text">Daha Fazla</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="gen-style-2">
+                        <div class="owl-carousel owl-loaded owl-drag" data-dots="false" data-nav="true" data-desk_num="4"
+                             data-lap_num="3" data-tab_num="2" data-mob_num="1" data-mob_sm="1" data-autoplay="false"
+                             data-loop="false" data-margin="30">
+                            @foreach (var film in (List<FilmFree.Models.Film>)ViewData["EnCokIzlenen"])
+                            {
+                                <div class="item">
+                                    <div class="movie type-movie status-publish has-post-thumbnail">
+                                        <div class="gen-carousel-movies-style-2 movie-grid style-2">
+                                            <div class="gen-movie-contain">
+                                                <div class="gen-movie-img">
+                                                    @if (string.IsNullOrEmpty(film.ResimYol) || film.ResimYol == "null" || film.ResimYol == "NULL")
+                                                    {
+                                                        <img src="~/images/background/asset-5.jpeg" alt="owl-carousel-video-image">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/images/film/@film.ResimYol" alt="owl-carousel-video-image">
+
+                                                    }
+
+                                                    <div class="gen-movie-add">
+                                                        <div class="wpulike wpulike-heart">
+                                                            <div class="wp_ulike_general_class wp_ulike_is_not_liked">
+
+                                                                <a href="javascript:;" id="filmBegen" data-id="@film.id">
+                                                                    @film.BegenilmeSayisi
+                                                                    @if (girisYapilmis && ((List<int>)ViewData["begenilenFilmIdler"]).Contains(film.id))
+                                                                    {
+                                                                        <span class="fa fa-heart"></span>
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="wp_ulike_btn wp_ulike_put_image"></span>
+                                                                    }
+                                                                </a>
+
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="gen-movie-action">
+                                                        <a href="/Home/Izle?id=@film.id" class="gen-button">
+                                                            <i class="fa fa-play"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="gen-info-contain">
+                                                    <div class="gen-movie-info">
+                                                        <h3>
+                                                            <a href="/Home/Izle?id=@film.id">
+                                                                @film.Isim
+                                                            </a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="gen-movie-meta-holder">
+                                                        <ul>
+                                                            @if (film.Dil == "TürkçeDublaj")
+                                                            {
+                                                                <li>Dublaj</li>
+                                                            }
+                                                            else if (film.Dil == "TürkçeAltyazılı")
+                                                            {
+                                                                <li>Altyazı</li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>Dublaj / Altyazı</li>
+                                                            }
+                                                            <li>
+                                                                <a href="/Home/Filtrele?Tur=@film.FilmTur.FirstOrDefault().id"><span>@film.FilmTur.FirstOrDefault().TurAdi</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- #post-## -->
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+}
+
+<!-- owl-carousel Videos Section-1 End -->
+<!-- owl-carousel Videos Section-2 Start -->
+@if (ViewData["EnCokBegenilen"] != null && ((List<FilmFree.Models.Film>)ViewData["EnCokBegenilen"]).Count != 0)
+{
+
+    <section class="gen-section-padding-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6">
+                    <h4 class="gen-heading-title">En Beğenilenler</h4>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+                    <div class="gen-movie-action">
+                        <div class="gen-btn-container text-right">
+                            <a href="/Home/Filtrele?Encok=Begenilenler" class="gen-button gen-button-flat">
+                                <span class="text">Daha Fazla</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="gen-style-2">
+                        <div class="owl-carousel owl-loaded owl-drag" data-dots="false" data-nav="true" data-desk_num="4"
+                             data-lap_num="3" data-tab_num="2" data-mob_num="1" data-mob_sm="1" data-autoplay="false"
+                             data-loop="false" data-margin="30">
+
+                            @foreach (var film in (List<FilmFree.Models.Film>)ViewData["EnCokBegenilen"])
+                            {
+                                <div class="item">
+                                    <div class="movie type-movie status-publish has-post-thumbnail">
+                                        <div class="gen-carousel-movies-style-2 movie-grid style-2">
+                                            <div class="gen-movie-contain">
+                                                <div class="gen-movie-img">
+                                                    @if (string.IsNullOrEmpty(film.ResimYol) || film.ResimYol == "null" || film.ResimYol == "NULL")
+                                                    {
+                                                        <img src="~/images/background/asset-5.jpeg" alt="owl-carousel-video-image">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/images/film/@film.ResimYol" alt="owl-carousel-video-image">
+
+                                                    }
+
+                                                    <div class="gen-movie-add">
+                                                        <div class="wpulike wpulike-heart">
+                                                            <div class="wp_ulike_general_class wp_ulike_is_not_liked">
+
+                                                                <a href="javascript:;" id="filmBegen" data-id="@film.id">
+                                                                    @film.BegenilmeSayisi
+                                                                    @if (girisYapilmis && ((List<int>)ViewData["begenilenFilmIdler"]).Contains(film.id))
+                                                                    {
+                                                                        <span class="fa fa-heart"></span>
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="wp_ulike_btn wp_ulike_put_image"></span>
+                                                                    }
+                                                                </a>
+
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="gen-movie-action">
+                                                        <a href="/Home/Izle?id=@film.id" class="gen-button">
+                                                            <i class="fa fa-play"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="gen-info-contain">
+                                                    <div class="gen-movie-info">
+                                                        <h3>
+                                                            <a href="/Home/Izle?id=@film.id">
+                                                                @film.Isim
+                                                            </a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="gen-movie-meta-holder">
+                                                        <ul>
+                                                            @if (film.Dil == "TürkçeDublaj")
+                                                            {
+                                                                <li>Dublaj</li>
+                                                            }
+                                                            else if (film.Dil == "TürkçeAltyazılı")
+                                                            {
+                                                                <li>Altyazı</li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>Dublaj / Altyazı</li>
+                                                            }
+                                                            <li>
+                                                                <a href="/Home/Filtrele?Tur=@film.FilmTur.FirstOrDefault().id"><span>@film.FilmTur.FirstOrDefault().TurAdi</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- #post-## -->
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+<!-- owl-carousel Videos Section-2 End -->
+<!-- Slick Slider start -->
+@if (ViewData["Rastgele"] != null && ((List<FilmFree.Models.Film>)ViewData["Rastgele"]).Count != 0)
+{
+    <section class="gen-section-padding-2 pt-0 pb-0" style="margin-bottom:50px;">
+        <div class="container">
+            <div class="home-singal-silder">
+                <div class="gen-nav-movies gen-banner-movies">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-md-6">
+                            <h4 class="gen-heading-title">Rastgele Filmler</h4>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="slider slider-for">
+                                <!-- Slider Items -->
+                                @foreach (var item in (List<FilmFree.Models.Film>)ViewData["Rastgele"])
+                                {
+
+                                    <div class="slider-item" style="background: url('/images/film/@item.ResimYol')">
+                                        <div class="gen-slick-slider h-100">
+                                            <div class="gen-movie-contain h-100">
+                                                <div class="container h-100">
+                                                    <div class="row align-items-center h-100">
+                                                        <div class="col-lg-6">
+                                                            <div class="gen-movie-info">
+                                                                <h3>@item.Isim</h3>
+                                                                <div>
+                                                                    @item.Icerik
+
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="gen-movie-action">
+                                                                <div class="gen-btn-container button-1">
+                                                                    <a class="gen-button" href="/Home/Izle?id=@item.id" tabindex="0">
+                                                                        <i aria-hidden="true" class="ion ion-play"></i>
+                                                                        <span class="text">Şimdi Oynat</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <!-- Slider Items -->
+                            </div>
+                            <div class="slider slider-nav">
+                                @foreach (var item in (List<FilmFree.Models.Film>)ViewData["Rastgele"])
+                                {
+                                    <div class="slider-nav-contain">
+                                        <div class="gen-nav-img">
+                                            @if (string.IsNullOrEmpty(item.ResimYol) || item.ResimYol == "null" || item.ResimYol == "NULL")
+                                            {
+                                                <img src="~/images/background/asset-5.jpeg" >
+                                            }
+                                            else
+                                            {
+                                                <img src="~/images/film/@item.ResimYol" alt="steamlab-image">
+                                            }
+
+                                        </div>
+                                        <div class="movie-info">
+                                            <h3>@item.Isim</h3>
+                                            <div class="gen-movie-meta-holder">
+                                                <ul>
+                                                    @if (item.Dil == "TürkçeDublaj")
+                                                    {
+                                                        <li>Dublaj</li>
+                                                    }
+                                                    else if (item.Dil == "TürkçeAltyazılı")
+                                                    {
+                                                        <li>Altyazı</li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li>Dublaj / Altyazı</li>
+                                                    }
+                                                    <li>
+                                                        <a href="/Home/Filtrele?Tur=@item.FilmTur.FirstOrDefault().id">
+                                                            @item.FilmTur.FirstOrDefault().TurAdi
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+<!-- Slick Slider End -->
+<!-- owl-carousel Videos Section-3 Start -->

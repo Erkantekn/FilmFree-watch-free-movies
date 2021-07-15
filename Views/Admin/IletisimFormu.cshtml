@@ -1,0 +1,409 @@
+﻿
+@{
+    ViewBag.Title = "İletişim Formları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<FilmFree.Models.IletisimFormu>
+@section head{
+    <link href="~/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+}
+@section script{
+    <script src="~/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/dataTables.bootstrap.min.js"></script>
+    <script>
+        var table = $("#tableDataTable table").DataTable({
+            "pagingType": "full",
+            "language": {
+                "emptyTable": "Tabloda herhangi bir veri mevcut değil",
+                "info": "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
+                "infoEmpty": "Kayıt yok",
+                "infoFiltered": "(_MAX_ kayıt içerisinden bulunan)",
+                "infoThousands": ".",
+                "lengthMenu": "Sayfada _MENU_ kayıt göster",
+                "loadingRecords": "Yükleniyor...",
+                "processing": "İşleniyor...",
+                "search": "Ara:",
+                "zeroRecords": "Eşleşen kayıt bulunamadı",
+                "paginate": {
+                    "first": "İlk",
+                    "last": "Son",
+                    "next": "Sonraki",
+                    "previous": "Önceki"
+                },
+                "aria": {
+                    "sortAscending": ": artan sütun sıralamasını aktifleştir",
+                    "sortDescending": ": azalan sütun sıralamasını aktifleştir"
+                },
+                "select": {
+                    "rows": {
+                        "_": "%d kayıt seçildi",
+                        "1": "1 kayıt seçildi",
+                        "0": "-"
+                    },
+                    "0": "-",
+                    "1": "%d satır seçildi",
+                    "2": "-",
+                    "_": "%d satır seçildi",
+                    "cells": {
+                        "1": "1 hücre seçildi",
+                        "_": "%d hücre seçildi"
+                    },
+                    "columns": {
+                        "1": "1 sütun seçildi",
+                        "_": "%d sütun seçildi"
+                    }
+                },
+                "autoFill": {
+                    "cancel": "İptal",
+                    "fillHorizontal": "Hücreleri yatay olarak doldur",
+                    "fillVertical": "Hücreleri dikey olarak doldur",
+                    "info": "-",
+                    "fill": "Bütün hücreleri <i>%d<\/i> ile doldur"
+                },
+                "buttons": {
+                    "collection": "Koleksiyon <span class=\"ui-button-icon-primary ui-icon ui-icon-triangle-1-s\"><\/span>",
+                    "colvis": "Sütun görünürlüğü",
+                    "colvisRestore": "Görünürlüğü eski haline getir",
+                    "copySuccess": {
+                        "1": "1 satır panoya kopyalandı",
+                        "_": "%ds satır panoya kopyalandı"
+                    },
+                    "copyTitle": "Panoya kopyala",
+                    "csv": "CSV",
+                    "excel": "Excel",
+                    "pageLength": {
+                        "-1": "Bütün satırları göster",
+                        "1": "-",
+                        "_": "%d satır göster"
+                    },
+                    "pdf": "PDF",
+                    "print": "Yazdır",
+                    "copy": "Kopyala",
+                    "copyKeys": "Tablodaki veriyi kopyalamak için CTRL veya u2318 + C tuşlarına basınız. İptal etmek için bu mesaja tıklayın veya escape tuşuna basın."
+                },
+                "infoPostFix": "-",
+                "searchBuilder": {
+                    "add": "Koşul Ekle",
+                    "button": {
+                        "0": "Arama Oluşturucu",
+                        "_": "Arama Oluşturucu (%d)"
+                    },
+                    "condition": "Koşul",
+                    "conditions": {
+                        "date": {
+                            "after": "Sonra",
+                            "before": "Önce",
+                            "between": "Arasında",
+                            "empty": "Boş",
+                            "equals": "Eşittir",
+                            "not": "Değildir",
+                            "notBetween": "Dışında",
+                            "notEmpty": "Dolu"
+                        },
+                        "number": {
+                            "between": "Arasında",
+                            "empty": "Boş",
+                            "equals": "Eşittir",
+                            "gt": "Büyüktür",
+                            "gte": "Büyük eşittir",
+                            "lt": "Küçüktür",
+                            "lte": "Küçük eşittir",
+                            "not": "Değildir",
+                            "notBetween": "Dışında",
+                            "notEmpty": "Dolu"
+                        },
+                        "string": {
+                            "contains": "İçerir",
+                            "empty": "Boş",
+                            "endsWith": "İle biter",
+                            "equals": "Eşittir",
+                            "not": "Değildir",
+                            "notEmpty": "Dolu",
+                            "startsWith": "İle başlar"
+                        },
+                        "array": {
+                            "contains": "İçerir",
+                            "empty": "Boş",
+                            "equals": "Eşittir",
+                            "not": "Değildir",
+                            "notEmpty": "Dolu",
+                            "without": "Hariç"
+                        }
+                    },
+                    "data": "Veri",
+                    "deleteTitle": "Filtreleme kuralını silin",
+                    "leftTitle": "Kriteri dışarı çıkart",
+                    "logicAnd": "ve",
+                    "logicOr": "veya",
+                    "rightTitle": "Kriteri içeri al",
+                    "title": {
+                        "0": "Arama Oluşturucu",
+                        "_": "Arama Oluşturucu (%d)"
+                    },
+                    "value": "Değer",
+                    "clearAll": "Filtreleri Temizle"
+                },
+                "searchPanes": {
+                    "clearMessage": "Hepsini Temizle",
+                    "collapse": {
+                        "0": "Arama Bölmesi",
+                        "_": "Arama Bölmesi (%d)"
+                    },
+                    "count": "{total}",
+                    "countFiltered": "{shown}\/{total}",
+                    "emptyPanes": "Arama Bölmesi yok",
+                    "loadMessage": "Arama Bölmeleri yükleniyor ...",
+                    "title": "Etkin filtreler - %d"
+                },
+                "searchPlaceholder": "Ara",
+                "thousands": ".",
+                "datetime": {
+                    "amPm": [
+                        "öö",
+                        "ös"
+                    ],
+                    "hours": "Saat",
+                    "minutes": "Dakika",
+                    "next": "Sonraki",
+                    "previous": "Önceki",
+                    "seconds": "Saniye",
+                    "unknown": "Bilinmeyen"
+                },
+                "decimal": ",",
+                "editor": {
+                    "close": "Kapat",
+                    "create": {
+                        "button": "Yeni",
+                        "submit": "Kaydet",
+                        "title": "Yeni kayıt oluştur"
+                    },
+                    "edit": {
+                        "button": "Düzenle",
+                        "submit": "Güncelle",
+                        "title": "Kaydı düzenle"
+                    },
+                    "error": {
+                        "system": "Bir sistem hatası oluştu (Ayrıntılı bilgi)"
+                    },
+                    "multi": {
+                        "info": "Seçili kayıtlar bu alanda farklı değerler içeriyor. Seçili kayıtların hepsinde bu alana aynı değeri atamak için buraya tıklayın; aksi halde her kayıt bu alanda kendi değerini koruyacak.",
+                        "noMulti": "Bu alan bir grup olarak değil ancak tekil olarak düzenlenebilir.",
+                        "restore": "Değişiklikleri geri al",
+                        "title": "Çoklu değer"
+                    },
+                    "remove": {
+                        "button": "Sil",
+                        "confirm": {
+                            "_": "%d adet kaydı silmek istediğinize emin misiniz?",
+                            "1": "Bu kaydı silmek istediğinizden emin misiniz?"
+                        },
+                        "submit": "Sil",
+                        "title": "Kayıtları sil"
+                    }
+                }
+            }
+        });
+
+        $('#tableDataTable tbody').on('click', 'tr', function () {
+            
+            var data = $(this).data("id");
+            var row = $(this);
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/getIletisimFormu?id=" + data,
+                    success: function (e) {
+                            $.ajax({
+                                type: "GET",
+                                url: "/Admin/IletisimFormuOnayla?id=" + data,
+                                success: function (d) {}
+                            });
+                        row.removeClass("okunmayan-tr");
+                        row.addClass("okunan-tr");
+                        $("#modelIletisimFormuDetay .modal-body").html(e);
+                    }, error: function () {
+                        $("#modelIletisimFormuDetay .modal-body").html("Hata Oluştu!");
+                    }
+                });
+            $("#modelIletisimFormuDetay").modal("show");
+        });
+
+        $('body').on('click', '.iletisimForm-okunmadi', function () {
+            var data = $(this).data("id");
+            var btn = $(this);
+            $.ajax({
+                type: "GET",
+                url: "/Admin/IletisimFormuOnaylama?id=" + data,
+                success: function (d) {
+                    $('#tableDataTable tbody tr').each(function () {
+
+                        if ($(this).data("id") == data) {
+
+                            $(this).removeClass("okunan-tr");
+                            $(this).addClass("okunmayan-tr");
+                            return false;
+
+                        }
+                    });
+                    $("#modelIletisimFormuDetay").modal("hide");
+                },
+                error: function (d) {
+                    btn.text("Başarısız");
+                }
+            });
+        });
+        $('body').on('click', '.iletisimForm-sil', function () {
+            var data = $(this).data("id");
+            var btn = $(this);
+            $.ajax({
+                type: "GET",
+                url: "/Admin/IletisimFormuSil?id=" + data,
+                success: function (d) {
+                    $('#tableDataTable tbody tr').each(function () {
+
+                        if ($(this).data("id") == data) {
+
+                            $(this).remove();
+                            return false;
+
+                        }
+                    });
+                    $("#modelIletisimFormuDetay").modal("hide");
+                },
+                error: function (d) {
+                    btn.text("Silinemedi");
+                }
+            });
+        });
+    </script>
+    }
+
+
+    <style>
+        table thead {
+            background-color: var(--primary-color);
+        }
+
+        .pagination li a {
+            display: inline-table;
+        }
+
+        #tableDataTable .row {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        div.dataTables_wrapper div.dataTables_length select {
+            width: auto;
+        }
+
+        table.dataTable thead .sorting {
+            background: url('/images/dataTable/sort_both.png') no-repeat center right;
+        }
+
+        table.dataTable thead .sorting_asc {
+            background: url('/images/dataTable/sort_asc.png') no-repeat center right;
+        }
+
+        table.dataTable thead .sorting_desc {
+            background: url('/images/dataTable/sort_desc.png') no-repeat center right;
+        }
+
+        table.dataTable thead .sorting_asc_disabled {
+            background: url('/images/dataTable/sort_asc_disabled.png') no-repeat center right;
+        }
+
+        table.dataTable thead .sorting_desc_disabled {
+            background: url('/images/dataTable/sort_desc_disabled.png') no-repeat center right;
+        }
+
+        .wrapper {
+            max-width: 400px;
+        }
+
+            .wrapper p {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                max-width: 150px;
+                width:100%;
+            }
+        .okunan-tr {
+            background-color: #28a745;
+            color: white;
+        }
+        .okunmayan-tr {
+            background-color: #ffc107;
+            color: black;
+        }
+    </style>
+
+    <!--Modal Detay-->
+    <div class="modal" tabindex="-1" role="dialog" id="modelIletisimFormuDetay" style="z-index:3000;display:none;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    İletişim Formu Detayı
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="ref">Kapat</button>
+                </div>
+                <div class="modal-footer">
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="container-fluid" id="tableDataTable">
+            <div class="row">
+                <a href="/Admin/IletisimFormu?statu=1" class="btn btn-warning" style="margin:5px;">Okunmayanları Göster </a> <a href="/Admin/IletisimFormu?statu=3" class="btn btn-success" style="margin:5px;">Okunanları Göster </a> <a href="/Admin/IletisimFormu?statu=2" class="btn btn-primary" style="margin:5px;">Tümünü Göster</a>
+
+                <table class="table table-hover table-dark">
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ad</th>
+                            <th>Mail</th>
+                            <th>Konu</th>
+                            <th>Mesaj</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item.OkunduMu)
+                            {
+                                <tr data-id="@item.id" class="okunan-tr">
+                                    <td>@item.Tarih.ToShortDateString()</td>
+                                    <td><a>@item.Ad</a></td>
+                                    <td><div class="wrapper"><p>@item.Mail</p></div></td>
+                                    <td><div class="wrapper"><p>@item.Konu</p></div></td>
+                                    <td><div class="wrapper"><p>@item.Mesaj</p></div></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr data-id="@item.id" class="okunmayan-tr">
+                                    <td>@item.Tarih.ToShortDateString()</td>
+                                    <td>@item.Ad</td>
+                                    <td><div class="wrapper"><p>@item.Mail</p></div></td>
+                                    <td><div class="wrapper"><p>@item.Konu</p></div></td>
+                                    <td><div class="wrapper"><p>@item.Mesaj</p></div></td>
+                                </tr>
+                            }
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+

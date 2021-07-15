@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FilmFreeModelStoreContainer" CdmEntityContainer="FilmFreeEntities">
+    <EntitySetMapping Name="BildirilenHatalar">
+      <EntityTypeMapping TypeName="FilmFreeModel.BildirilenHatalar">
+        <MappingFragment StoreEntitySet="BildirilenHatalar">
+          <ScalarProperty Name="incelendiMi" ColumnName="incelendiMi" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+          <ScalarProperty Name="filmId" ColumnName="filmId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Film">
+      <EntityTypeMapping TypeName="FilmFreeModel.Film">
+        <MappingFragment StoreEntitySet="Film">
+          <ScalarProperty Name="Dil" ColumnName="Dil" />
+          <ScalarProperty Name="ErisimEngelli" ColumnName="ErisimEngelli" />
+          <ScalarProperty Name="IMDB" ColumnName="IMDB" />
+          <ScalarProperty Name="eklenmeTarihi" ColumnName="eklenmeTarihi" />
+          <ScalarProperty Name="BegenilmeSayisi" ColumnName="BegenilmeSayisi" />
+          <ScalarProperty Name="YorumSayisi" ColumnName="YorumSayisi" />
+          <ScalarProperty Name="IzlenmeSayisi" ColumnName="IzlenmeSayisi" />
+          <ScalarProperty Name="Tags" ColumnName="Tags" />
+          <ScalarProperty Name="Oyuncular" ColumnName="Oyuncular" />
+          <ScalarProperty Name="Icerik" ColumnName="Icerik" />
+          <ScalarProperty Name="ResimYol" ColumnName="ResimYol" />
+          <ScalarProperty Name="YayınTarihi" ColumnName="YayınTarihi" />
+          <ScalarProperty Name="SureDK" ColumnName="SureDK" />
+          <ScalarProperty Name="Isim" ColumnName="Isim" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FilmTur">
+      <EntityTypeMapping TypeName="FilmFreeModel.FilmTur">
+        <MappingFragment StoreEntitySet="FilmTur">
+          <ScalarProperty Name="TurAdi" ColumnName="TurAdi" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GonderilenMailler">
+      <EntityTypeMapping TypeName="FilmFreeModel.GonderilenMailler">
+        <MappingFragment StoreEntitySet="GonderilenMailler">
+          <ScalarProperty Name="token" ColumnName="token" />
+          <ScalarProperty Name="IslemGerceklestiMi" ColumnName="IslemGerceklestiMi" />
+          <ScalarProperty Name="GonderimZamani" ColumnName="GonderimZamani" />
+          <ScalarProperty Name="GonderimTipiId" ColumnName="GonderimTipiId" />
+          <ScalarProperty Name="KullaniciId" ColumnName="KullaniciId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GonderilenMailTipleri">
+      <EntityTypeMapping TypeName="FilmFreeModel.GonderilenMailTipleri">
+        <MappingFragment StoreEntitySet="GonderilenMailTipleri">
+          <ScalarProperty Name="ZamanAsimiSuresiDKCinsi" ColumnName="ZamanAsimiSuresiDKCinsi" />
+          <ScalarProperty Name="TipAdi" ColumnName="TipAdi" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IframeTablosu">
+      <EntityTypeMapping TypeName="FilmFreeModel.IframeTablosu">
+        <MappingFragment StoreEntitySet="IframeTablosu">
+          <ScalarProperty Name="filmId" ColumnName="filmId" />
+          <ScalarProperty Name="VarsaTrDublaj" ColumnName="VarsaTrDublaj" />
+          <ScalarProperty Name="VarsaTrAltyazi" ColumnName="VarsaTrAltyazi" />
+          <ScalarProperty Name="kaynakLinki" ColumnName="kaynakLinki" />
+          <ScalarProperty Name="kaynakIsmi" ColumnName="kaynakIsmi" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IletisimFormu">
+      <EntityTypeMapping TypeName="FilmFreeModel.IletisimFormu">
+        <MappingFragment StoreEntitySet="IletisimFormu">
+          <ScalarProperty Name="OkunduMu" ColumnName="OkunduMu" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Mesaj" ColumnName="Mesaj" />
+          <ScalarProperty Name="Konu" ColumnName="Konu" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Ad" ColumnName="Ad" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kullanicilar">
+      <EntityTypeMapping TypeName="FilmFreeModel.Kullanicilar">
+        <MappingFragment StoreEntitySet="Kullanicilar">
+          <ScalarProperty Name="BAN" ColumnName="BAN" />
+          <ScalarProperty Name="KayitTarihi" ColumnName="KayitTarihi" />
+          <ScalarProperty Name="Yetki" ColumnName="Yetki" />
+          <ScalarProperty Name="MailOnayliMi" ColumnName="MailOnayliMi" />
+          <ScalarProperty Name="Dogrulama" ColumnName="Dogrulama" />
+          <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+          <ScalarProperty Name="Ad" ColumnName="Ad" />
+          <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="kAdi" ColumnName="kAdi" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="FilmFreeModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Yorumlar">
+      <EntityTypeMapping TypeName="FilmFreeModel.Yorumlar">
+        <MappingFragment StoreEntitySet="Yorumlar">
+          <ScalarProperty Name="onaylanmaTarihi" ColumnName="onaylanmaTarihi" />
+          <ScalarProperty Name="onaylayanId" ColumnName="onaylayanId" />
+          <ScalarProperty Name="onayliMi" ColumnName="onayliMi" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Yorum" ColumnName="Yorum" />
+          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="Ad" ColumnName="Ad" />
+          <ScalarProperty Name="filmId" ColumnName="filmId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="BegenilerTablosu" TypeName="FilmFreeModel.BegenilerTablosu" StoreEntitySet="BegenilerTablosu">
+      <EndProperty Name="Kullanicilar">
+        <ScalarProperty Name="id" ColumnName="KullaniciId" />
+      </EndProperty>
+      <EndProperty Name="Film">
+        <ScalarProperty Name="id" ColumnName="FilmId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TurEslestirmeTablosu" TypeName="FilmFreeModel.TurEslestirmeTablosu" StoreEntitySet="TurEslestirmeTablosu">
+      <EndProperty Name="FilmTur">
+        <ScalarProperty Name="id" ColumnName="turId" />
+      </EndProperty>
+      <EndProperty Name="Film">
+        <ScalarProperty Name="id" ColumnName="filmId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="anasayfaSlayt">
+      <EntityTypeMapping TypeName="FilmFreeModel.anasayfaSlayt">
+        <MappingFragment StoreEntitySet="anasayfaSlayt">
+          <ScalarProperty Name="resimYoluHD_2" ColumnName="resimYoluHD_2" />
+          <ScalarProperty Name="resimYoluHD" ColumnName="resimYoluHD" />
+          <ScalarProperty Name="onerimSekli" ColumnName="onerimSekli" />
+          <ScalarProperty Name="filmId" ColumnName="filmId" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,123 @@
+﻿
+@{
+    ViewBag.Title = "Slayt Ayarları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<FilmFree.Models.anasayfaSlayt>
+<style>
+    table thead {
+        background-color: var(--primary-color);
+    }
+    table td img{width:100%;max-width:200px;}
+</style>
+@section script{
+    <script>
+        $('#slaytTable tbody').on('click', 'td', function () {
+           
+            
+            if (!$(this).hasClass("sil") && !$(this).hasClass("slayt-sil")) {
+                var data = $(this).parent().data("id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/getSlayt?id=" + data,
+                    success: function (e) {
+                        $("#modelSlaytDetay .modal-body").html(e);
+                    }, error: function () {
+                        $("#modelSlaytDetay .modal-body").html("Hata Oluştu!");
+                    }
+                });
+                $("#modelSlaytDetay").modal("show");
+
+
+            }
+        });
+        $('#slaytTable').on('click', '.slayt-ekle', function () {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/getSlayt?id=0",
+                success: function (e) {
+                    $("#modelSlaytDetay .modal-body").html(e);
+                }, error: function () {
+                    $("#modelSlaytDetay .modal-body").html("Hata Oluştu!");
+                }
+            });
+            $("#modelSlaytDetay").modal("show");
+
+
+
+        });
+        $('#slaytTable').on('click', '.slayt-sil', function () {
+            var data = $(this).data("id");
+            var btn = $(this);
+            $.ajax({
+                type: "GET",
+                url: "/Admin/SlaytSil?id="+data,
+                success: function (e) {
+                    btn.parent().parent().remove();
+                }, error: function () {
+                    btn.removeClass("slayt-sil");
+                    btn.text("Hata Oluştu");
+                }
+            });
+
+
+
+        });
+    </script>
+    }
+
+<!--Modal Detay-->
+<div class="modal" tabindex="-1" role="dialog" id="modelSlaytDetay" style="z-index:3000;display:none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Slayt Düzenle - Ekle
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="ref">Kapat</button>
+            </div>
+            <div class="modal-footer">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<section>
+    <div class="container-fluid" id="slaytTable">
+        <div class="row">
+
+            <table class="table table-hover table-dark" >
+                <thead>
+                    <tr>
+                        <th>Film ID - Isim</th>
+                        <th>Önerim şekli</th>
+                        <th>Resim Arkaplan HD</th>
+                        <th>Resim Sağ HD</th>
+                        <th>Sil</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr data-id="@item.id">
+                            <td>@item.filmId - @item.Film.Isim</td>
+                            <td><a>@item.onerimSekli</a></td>
+                            <td><img src="~/images/film/@item.resimYoluHD" /></td>
+                            <td><img src="~/images/film/@item.resimYoluHD_2" /></td>
+                            <td class="sil"><a href="javascript:;" class="btn btn-danger slayt-sil" data-id="@item.id">Sil</a></td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            <a href="javascript:;" class="btn btn-success slayt-ekle">Yeni slayt ekle </a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,61 @@
+﻿@model FilmFree.Models.anasayfaSlayt
+@if (Model != null && Model.id != 0) 
+{
+    <form action="/Admin/SlaytKaydet" method="post">
+        <input type="hidden" name="id" value="@Model.id" />
+        <table>
+            <tr>
+                <td>Film ID - İsim</td>
+                <td>@Model.filmId - @Model.Film.Isim</td>
+            </tr>
+            <tr>
+                <td>Önerim Şekli</td>
+                <td><input type="text" value="@Model.onerimSekli" name="onerimSekli" /></td>
+            </tr>
+            <tr>
+                <td>Resim Arkaplan HD URL:</td>
+                <td><input type="text" value="" name="url1" /></td>
+            </tr>
+            <tr>
+                <td>Resim Sağ HD URL:</td>
+                <td><input type="text" value="" name="url2" /></td>
+            </tr>
+            <tr>
+                <td>Kaydet:</td>
+                <td><input type="submit" class="btn btn-success" value="Kaydet"></td>
+            </tr>
+        </table>
+    </form>
+}
+else
+{
+   
+    <form action="/Admin/SlaytEkle" method="post">
+        <table>
+            <tr>
+                <td>Film ID - İsim</td>
+                <td>
+                    @Html.DropDownList("filmId", (IEnumerable<SelectListItem>)ViewBag.Liste, new { @class = "dropdown form-control" })
+                </td>
+            </tr>
+            <tr>
+                <td>Önerim Şekli</td>
+                <td><input type="text" value="@Model.onerimSekli" name="onerimSekli" /></td>
+            </tr>
+            <tr>
+                <td>Resim Arkaplan HD URL:</td>
+                <td><input type="text" value="" name="url1" /></td>
+            </tr>
+            <tr>
+                <td>Resim Sağ HD URL:</td>
+                <td><input type="text" value="" name="url2" /></td>
+            </tr>
+            <tr>
+                <td>Kaydet:</td>
+                <td><input type="submit" class="btn btn-success" value="Kaydet"></td>
+            </tr>
+        </table>
+    </form>
+    
+}
+

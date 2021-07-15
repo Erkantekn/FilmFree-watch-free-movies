@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Yetki Ver";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<FilmFree.Models.Kullanicilar>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" id="araKullanici">
+                <form action="javascript:void(0);">
+                    <div class="col-md-9" style="float:left;">
+                        <input name="ara" type="text" placeholder="Kullanıcı Adı Arayın.." required maxlength="20" />
+                    </div>
+                    <div class="col-md-3" style="float:right;">
+                        <input type="submit" class="btn btn-primary btn-block" value="Ara" />
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-md-12" id="tableKullanici">
+
+            </div>
+        </div>
+    </div>
+</section>
+
+@section script{
+    <script>
+        $("#araKullanici form").submit(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Admin/getKullanicilarForYetki",
+                data: $(this).serialize(),
+                success: function (e) {
+                    $('#tableKullanici').html(e);
+
+                }
+            });
+        });
+        $('#tableKullanici').on('click', '.yetkiDegistir', function () {
+            
+            var id = $(this).data("id");
+            var yetki = $(this).data("yetki");
+            window.location.href="/Admin/yetkiDegistir?id=" + id + "&yetki=" + yetki;
+        });
+        function dropdownChanged(e) {
+            console.log($(e));
+            var yetki = $(e).val();
+            var btn = $(e).parent().parent().find(".yetkiDegistir").first();
+            console.log($(btn));
+            $(btn).attr("data-yetki",yetki);
+        }
+        
+    </script>
+}

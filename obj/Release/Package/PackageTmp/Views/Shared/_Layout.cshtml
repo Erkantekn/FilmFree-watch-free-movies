@@ -1,0 +1,507 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+@{
+    FilmFree.Models.FilmFreeEntities DB = new FilmFree.Models.FilmFreeEntities();
+    List<FilmFree.Models.FilmTur> filmTur = DB.FilmTur.Where(x => x.id != 31).OrderBy(x => x.TurAdi).ToList();
+
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Reklamsız film izle, Full hd film izle, En yeni filmleri izle" />
+    <meta name="description" content="Reklamsız full HD film izleme platformu. Sitemizde bize ait hiçbir reklam bulunmamaktır. Sitemizde bulunan reklamlar film sağlayıcısının sitesinde bulunan reklamlardır." />
+    <meta name="author" content="Erkan" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>@ViewBag.Title - FilmFree Reklamsız Film İzleme Sitesi</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/images/favicon.ico">
+    <!-- CSS bootstrap-->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <!--  Style -->
+    <link rel="stylesheet" href="~/css/style.css" />
+    <!--  Responsive -->
+    <link rel="stylesheet" href="~/css/responsive.css" />
+    <link href="~/css/myStyle.css" rel="stylesheet" />
+    @RenderSection("head", false)
+</head>
+
+<body>
+
+    <!--=========== Loader =============-->
+    <div id="gen-loading">
+        <div id="gen-loading-center">
+            <img src="~/images/logo-1.png" alt="loading">
+        </div>
+    </div>
+    <!--========== Header ==============-->
+    <header id="gen-header" class="gen-header-style-1 gen-has-sticky">
+        <div class="gen-bottom-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <nav class="navbar navbar-expand-lg navbar-light">
+                            <a class="navbar-brand" href="/Home/Index">
+                                <img class="img-fluid logo" src="~/images/logo-1.png" alt="FilmFree reklamsız film">
+                            </a>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <div id="gen-menu-contain" class="gen-menu-contain">
+                                    <ul id="gen-main-menu" class="navbar-nav ml-auto">
+                                        <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                                            <a href="/Home/Index" aria-current="page">Anasayfa</a>
+
+                                        </li>
+                                        <li class="menu-item @((ViewContext.RouteData.Values["Action"].ToString() == "Filmler" || Request.QueryString["Encok"] == "Begenilenler" || Request.QueryString["Tur"] != null) ? "active" : "")">
+                                            <a href="/Home/Filmler">Filmler</a>
+                                            <i class="fa fa-chevron-down gen-submenu-icon"></i>
+                                            <ul class="sub-menu" style="max-height:250px;overflow:auto;">
+                                                <li class="menu-item">
+                                                    <a href="/Home/Filtrele?Encok=Eklenen" aria-current="page">En Son Eklenen Filmler</a>
+                                                </li>
+                                                @foreach (var item in filmTur)
+                                                {
+                                                    <li class="menu-item">
+                                                        <a href="/Home/Filtrele?Tur=@item.id" aria-current="page">@item.TurAdi</a>
+                                                    </li>
+                                                }
+
+
+                                            </ul>
+
+                                        </li>
+                                        <li class="menu-item @(Request.QueryString["Encok"] == "Izlenenler"  ? "active" : "")">
+                                            <a href="/Home/Filtrele?Encok=Izlenenler">En Çok İzlenenler</a>
+
+                                        </li>
+                                        <li class="menu-item @(ViewContext.RouteData.Values["Action"].ToString() == "Iletisim" ? "active" : "")">
+                                            <a href="/Home/Iletisim">İletişime Geç</a>
+
+                                        </li>
+                                        <li id="setVisible">
+                                            <form style="border:1px white dashed;" id="setVisible" action="/Home/Filtrele" method="get">
+
+
+                                                <label style="margin:0px;">
+                                                    <span class="screen-reader-text" id="setVisible"></span>
+                                                    <input type="search" class="search-field" placeholder="Ara... Film ismi, Oyuncu, Etiket, Tür..." value="" name="Ara" id="setVisible">
+                                                </label>
+                                                <button type="submit" class="search-submit" id="setVisible" style="top:2px;right:2px;">
+                                                    <span class="screen-reader-text"></span>
+                                                </button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="gen-header-info-box">
+                                <div class="gen-menu-search-block">
+                                    <a href="javascript:void(0)" id="gen-seacrh-btn"><i class="fa fa-search"></i></a>
+                                    <div class="gen-search-form">
+                                        <form role="search" method="get" class="search-form" action="/Home/Filtrele">
+                                            <label>
+                                                <span class="screen-reader-text"></span>
+                                                <input type="search" class="search-field" placeholder="Ara... Film ismi, Oyuncu, Etiket, Tür..." value="" name="Ara">
+                                            </label>
+                                            <button type="submit" class="search-submit">
+                                                <span class="screen-reader-text"></span>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="gen-account-holder">
+                                    <a href="javascript:void(0)" id="gen-user-btn"><i class="fa fa-user"></i></a>
+                                    <div class="gen-account-menu">
+                                        <ul class="gen-account-menu">
+                                            <!-- Pms Menu -->
+
+                                            @if (HttpContext.Current.User.Identity.Name == "")
+                                            {
+                                                <li>
+                                                    <a href="/Home/GirisYap">
+                                                        <i class="fas fa-sign-in-alt"></i>
+                                                        Giriş Yap
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/Home/Kaydol">
+                                                        <i class="fa fa-user"></i>
+                                                        Kayıt Ol
+                                                    </a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+
+
+                                                <li>
+                                                    <a href="/Home/Hesabim">
+                                                        <i class="fa fa-user"></i>
+                                                        Hesabım
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="/Home/Begendiklerim">
+                                                        <i class="fa fa-indent"></i>
+                                                        Beğendiklerim
+                                                    </a>
+                                                </li>
+
+                                                if (User.IsInRole("B") || User.IsInRole("C"))
+                                                {
+                                                    <li>
+                                                        <a href="/Admin/Yorumlar">
+                                                            <i class="fa fa-quote-left"></i>
+                                                            Yorumlar
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/Istatistik">
+                                                            <i class="fa fa-chart-pie"></i>
+                                                            İstatistik
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/FilmYukle">
+                                                            <i class="fa fa-upload"></i>
+                                                            Film Yükle
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/FilmeLinkEkle">
+                                                            <i class="fa fa-link"></i>
+                                                            Filme Link Ekle
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/NullResimleriDoldur">
+                                                            <i class="fa fa-image"></i>
+                                                            Film Resmi Boş Olanları Doldur
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/IletisimFormu">
+                                                            <i class="fa fa-align-justify"></i>
+                                                            İletişim Formu
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/BildirilenHatalar">
+                                                            <i class="fa fa-times-circle"></i>
+                                                            Bildirilen Hatalar
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/SlaytSecimi">
+                                                            <i class="fa fa-film"></i>
+                                                            Anasayfa Slayt Ayarları
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/Erisim">
+                                                            <i class="fa fa-ban"></i>
+                                                            Filme Erişim Kapat
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/Ban">
+                                                            <i class="fa fa-user-lock"></i>
+                                                            Kullanıcı Engelle
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/Tur">
+                                                            <i class="fa fa-plus-square"></i>
+                                                            Tür Ayarları
+                                                        </a>
+                                                    </li>
+                                                }
+
+
+                                                if (User.IsInRole("C"))
+                                                {
+                                                    <li>
+                                                        <a href="/Admin/YetkiVer">
+                                                            <i class="fa fa-user-check"></i>
+                                                            Yetki Ver
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="/Admin/VeritabaniTemizligi">
+                                                            <i class="fa fa-database"></i>
+                                                            Veritabanı Temizliği
+                                                        </a>
+                                                    </li>
+                                                }
+
+
+
+
+
+
+                                                <li>
+                                                    <a href="/Home/CikisYap">
+                                                        <i class="fa fa-sign-out-alt"></i>
+                                                        Çıkış Yap
+                                                    </a>
+                                                </li>
+
+
+
+                                            }
+
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                @if (HttpContext.Current.User.Identity.Name == "")
+                                {
+                                    <div class="gen-btn-container">
+                                        <a href="/Home/Kaydol" class="gen-button">
+                                            <div class="gen-button-block">
+                                                <span class="gen-button-line-left"></span>
+                                                <span class="gen-button-text">Kayıt Ol</span>
+
+                                            </div>
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="gen-btn-container">
+                                        <a href="/Home/CikisYap" class="gen-button">
+                                            <div class="gen-button-block">
+                                                <span class="gen-button-line-left"></span>
+                                                <span class="gen-button-text">Çıkış Yap</span>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                }
+                            </div>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--========== Header ==============-->
+    @if (ViewContext.RouteData.Values["Action"].ToString() != "Index" && ViewContext.RouteData.Values["Action"].ToString() != "Izle")
+    {
+        <div class="gen-breadcrumb" style=" padding-top: 117px;">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-12">
+                        <nav aria-label="breadcrumb">
+                            <div class="gen-breadcrumb-title">
+                                <h1>
+                                    @ViewBag.Title
+                                </h1>
+                            </div>
+                            <div class="gen-breadcrumb-container">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="/Home/Index"><i class="fas fa-home mr-2"></i>Anasayfa</a></li>
+                                    <li class="breadcrumb-item active">@ViewBag.Title</li>
+                                </ol>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+    @{//Hatamodal
+        if (TempData["Hata"] != null)
+        {
+            <!-- Hata Modal -->
+            <div id="hataModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close" id="closeModal">&times;</span>
+                    <p>@TempData["Hata"]</p>
+                </div>
+
+            </div>
+
+
+        }
+    }
+
+    @RenderBody()
+    <!-- footer start -->
+    <footer id="gen-footer">
+        <div class="gen-footer-style-1">
+            <div class="gen-footer-top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="widget">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <img src="~/images/asset-0.png" class="gen-footer-logo" alt="gen-footer-logo">
+                                        <p>Tamamen reklamsız olarak filmleri izlemenize olanak sağlıyoruz. Video başlangıcında oynatılan reklamlar bize ait değildir. Video oynatıcı sitesine ait reklamlardır.</p>
+                                        <ul class="social-link">
+                                            <li><a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li><a href="#" class="facebook"><i class="fab fa-instagram"></i></a></li>
+                                            <li><a href="#" class="facebook"><i class="fab fa-skype"></i></a></li>
+                                            <li><a href="#" class="facebook"><i class="fab fa-twitter"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="widget">
+                                <h4 class="footer-title">Keşfet</h4>
+                                <div class="menu-explore-container">
+                                    <ul class="menu">
+                                        <li class="menu-item">
+                                            <a href="/Home/Index" aria-current="page">Anasayfa</a>
+
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="/Home/Kaydol" aria-current="page">Kayıt Ol</a>
+
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="/Home/GirisYap" aria-current="page">Giriş Yap</a>
+
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="/Home/Filmler">Filmler</a>
+
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="/Home/Filtrele?Encok=Izlenenler">En Çok İzlenenler</a>
+
+                                        </li>
+                                        <li class="menu-item">
+                                            <a href="/Home/Iletisim">İletişime Geç</a>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3  col-md-6">
+                            <div class="widget">
+                                <h4 class="footer-title">Telif Hakkı</h4>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <p>Yayından kaldırılmasını istediğiniz film veya dizi varsa destek@filmfree.com mailinden ulaşabilirsiniz. İçerik incelenecek ve uygun görülürse erişim kapatılacaktır.</p>
+                                        <a href="/Home/Hukuksal">
+                                            İlgili Hukuk Metni
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gen-copyright-footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 align-self-center">
+                            <span class="gen-copyright">
+                                <a target="_blank" href="/Home/Hukuksal">
+                                    Copyright @DateTime.Now.Year FilmFree All Rights
+                                    Reserved.
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer End -->
+    <!-- Back-to-Top start -->
+    <div id="back-to-top">
+        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+    </div>
+
+    <!-- Back-to-Top end -->
+    <!-- js-min -->
+    <script src="~/js/jquery-3.6.0.min.js"></script>
+    <script src="~/js/asyncloader.min.js"></script>
+    <!-- JS bootstrap -->
+    <!-- owl-carousel -->
+    <script src="~/js/owl.carousel.min.js"></script>
+    <!-- counter-js -->
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.counterup.min.js"></script>
+    <!-- popper-js -->
+
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/swiper-bundle.min.js"></script>
+    <!-- Iscotop -->
+    <script src="~/js/isotope.pkgd.min.js"></script>
+
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+
+    <script src="~/js/slick.min.js"></script>
+
+    <script src="~/js/filmFree-core.js"></script>
+
+    <script src="~/js/script.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+
+    @RenderSection("script", false)
+</body>
+
+</html>
+@if (TempData["Hata"] != null)
+{
+    <script>
+        // Get the modal
+        var modal = document.getElementById("hataModal");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("closeModal");
+
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+            if (event.target == modal2) {
+                modal2.style.display = "none";
+            }
+        };
+
+
+        var modal2 = document.getElementById("hataBildirModal");
+
+        // Get the <span> element that closes the modal
+        var span2 = document.getElementById("closeHataBildirModal");
+
+        // When the user clicks on <span> (x), close the modal
+        span2.onclick = function () {
+            modal2.style.display = "none";
+        };
+
+
+
+
+
+
+     
+    </script>
+
+    TempData["Hata"] = null;
+}

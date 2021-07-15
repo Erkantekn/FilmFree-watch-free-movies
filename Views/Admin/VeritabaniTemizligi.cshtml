@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Veritabanını Temizle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<FilmFree.Models.GonderilenMailler>
+    @{ 
+        int zamaniAsilan = 0;
+        bool asilmisMi(DateTime dat,int minute)
+        {
+            if (DateTime.Compare(DateTime.Now, dat.AddMinutes(minute)) > 0)
+                return true;
+            return false;
+        }
+        zamaniAsilan = Model.Where(x => asilmisMi(x.GonderimZamani, x.GonderilenMailTipleri.ZamanAsimiSuresiDKCinsi)).Count();
+    }
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <h3>@Model.Where(x => x.IslemGerceklestiMi).Count() Adet işlemi gerçekleşmiş mail var.</h3>
+            </div>
+            <div class="col-md-3">
+                <form action="/Admin/VeritabaniTemizligi?statu=1" method="post">
+                    <input class="btn btn-block btn-success" type="submit" value="Temizle" />
+                </form>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-md-9">
+                <h3>@zamaniAsilan Adet mailin son kullanım süresi geçmiş.</h3>
+            </div>
+            <div class="col-md-3">
+                <form action="/Admin/VeritabaniTemizligi?statu=2" method="post">
+                    <input class="btn btn-block btn-success" type="submit" value="Temizle" />
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+

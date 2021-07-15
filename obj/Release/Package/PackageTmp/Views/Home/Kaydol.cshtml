@@ -1,0 +1,133 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Reklamsız film izle, Full hd film izle, En yeni filmleri izle" />
+    <meta name="description" content="Reklamsız full HD film izleme platformu. Sitemizde bize ait hiçbir reklam bulunmamaktır. Sitemizde bulunan reklamlar film sağlayıcısının sitesinde bulunan reklamlardır." />
+    <meta name="author" content="Erkan" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Kayıt Ol - FilmFree Reklamsız Film İzleme Platformu</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/images/favicon.ico">
+    <!-- CSS bootstrap-->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <!--  Style -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <!--  Responsive -->
+    <link rel="stylesheet" href="/css/responsive.css" />
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+
+<body>
+
+    <!--=========== Loader =============-->
+    <div id="gen-loading">
+        <div id="gen-loading-center">
+            <img src="/images/logo-1.png" alt="loading">
+        </div>
+    </div>
+    <!--=========== Loader =============-->
+    <!-- register -->
+    <section class="position-relative pb-0">
+        <div class="gen-register-page-background" style="background-image: url('/images/background/film-arkaplan.jpg')">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="text-center">
+                        <div>
+                            <a class="navbar-brand" href="/Home/Index">
+                                <img class="img-fluid logo" src="~/images/logo-1.png" alt="FilmFree reklamsız film">
+                            </a>
+                        </div>
+                        <form id="pms_register-form" class="pms-form" method="POST" action="/Home/Kaydol">
+                            <h4>Kayıt Ol</h4>
+
+                            <ul class="pms-form-fields-wrapper pl-0">
+                                <li class="pms-field pms-user-login-field ">
+                                    <label for="pms_user_login">Kullanıcı Adı *</label>
+                                    <input id="pms_user_login" name="kAdi" type="text" value="" maxlength="20" required>
+                                </li>
+                                <li class="pms-field pms-user-email-field ">
+                                    <label for="pms_user_email">E-mail *</label>
+                                    <input id="pms_user_email" name="Mail" type="email" value="" maxlength="50" required>
+                                </li>
+                                <li class="pms-field pms-first-name-field ">
+                                    <label for="pms_first_name">Ad</label>
+                                    <input id="pms_first_name" name="Ad" type="text" value="" maxlength="50">
+                                </li>
+                                <li class="pms-field pms-last-name-field ">
+                                    <label for="pms_last_name">Soyad</label>
+                                    <input id="pms_last_name" name="Soyad" type="text" value="" maxlength="50">
+                                </li>
+                                <li class="pms-field pms-pass1-field">
+                                    <label for="pms_pass1">Şifre *</label>
+                                    <input id="pms_pass1" name="Sifre" type="password" maxlength="20" required>
+                                </li>
+                                <li class="pms-field pms-pass2-field">
+                                    <label for="pms_pass2">Şifre Tekrarı *</label>
+                                    <input id="pms_pass2" name="SifreTekrari" type="password" maxlength="20" required>
+                                </li>
+                                <li style="width:100%;">
+                                    <div class="g-recaptcha" data-sitekey="6LcQ7RobAAAAAC8R7i5V6PwDHEkpDxurgEv35yZp"></div>
+                                </li>
+                                @if (TempData["Hata"] != null)
+                                {
+                                    <li style="width:100%;">
+                                        <div class="alert alert-info" role="alert">
+                                            @TempData["Hata"]
+                                        </div>
+                                    </li>
+                                    TempData["Hata"] = null;
+                                }
+                                <li style="width:100%;"> <input name="pms_register" type="submit" value="Kayıt Ol"></li>
+                                <li style="width:100%;"> <a href="/Home/GirisYap">Zaten Hesabın Var Mı? Giriş Yap</a></li>
+                            </ul>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- register -->
+    <!-- Back-to-Top start -->
+    <div id="back-to-top">
+        <a class="top" id="top" href="#top"> <i class="ion-ios-arrow-up"></i> </a>
+    </div>
+    <!-- Back-to-Top end -->
+    <!-- js-min -->
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/asyncloader.min.js"></script>
+    <!-- JS bootstrap -->
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- owl-carousel -->
+    <script src="/js/owl.carousel.min.js"></script>
+    <!-- counter-js -->
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/jquery.counterup.min.js"></script>
+    <!-- popper-js -->
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/swiper-bundle.min.js"></script>
+    <!-- Iscotop -->
+    <script src="/js/isotope.pkgd.min.js"></script>
+
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+
+    <script src="/js/slick.min.js"></script>
+
+    <script src="/js/filmFree-core.js"></script>
+
+    <script src="/js/script.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewBag.Title = "İstatistikler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section script{
+
+    <script src="~/js/canvasJsforChart.js"></script>
+    <script>
+        var pieChartValues = [{
+            y: (100 -@((int)ViewData["resimsizFilmYuzdesi"])),
+            exploded: true,
+            indexLabel: "Resimli",
+            color: "#00badd"
+        }, {
+                y: @((int)ViewData["resimsizFilmYuzdesi"]),
+            indexLabel: "Resimsiz",
+            color: "#e60023"
+        }];
+        renderPieChart(pieChartValues);
+
+        function renderPieChart(values) {
+
+            var chart = new CanvasJS.Chart("pieChart", {
+                backgroundColor: "white",
+                colorSet: "colorSet2",
+
+                title: {
+                    text: "Yüklenen Filmler: " + @ViewData["filmSayisi"],
+                    fontFamily: "Verdana",
+                    fontSize: 25,
+                    fontWeight: "normal",
+                },
+                animationEnabled: true,
+                data: [{
+                    indexLabelFontSize: 15,
+                    indexLabelFontFamily: "Monospace",
+                    indexLabelFontColor: "black",
+                    indexLabelLineColor: "black",
+                    indexLabelPlacement: "outside",
+                    type: "pie",
+                    showInLegend: false,
+                    toolTipContent: "<strong>#percent%</strong>",
+                    dataPoints: values
+                }]
+            });
+            chart.render();
+        }
+
+        //pieChart 2
+        var pieChartValues2 = [{
+            y: @(100-(int)ViewData["onaysizYorumYuzdesi"]),
+            exploded: true,
+            indexLabel: "Onaylanan",
+            color: "#0314fd"
+        }, {
+            y: @((int)ViewData["onaysizYorumYuzdesi"]),
+            indexLabel: "Onaylanmayan",
+            color: "#260423"
+        }];
+        renderPieChart2(pieChartValues2);
+
+        function renderPieChart2(values) {
+
+            var chart = new CanvasJS.Chart("pieChart2", {
+                backgroundColor: "white",
+                colorSet: "colorSet2",
+
+                title: {
+                    text: "Yapılan Yorumlar: " + @ViewData["yorumSayisi"],
+                    fontFamily: "Verdana",
+                    fontSize: 25,
+                    fontWeight: "normal",
+                },
+                animationEnabled: true,
+                data: [{
+                    indexLabelFontSize: 15,
+                    indexLabelFontFamily: "Monospace",
+                    indexLabelFontColor: "black",
+                    indexLabelLineColor: "black",
+                    indexLabelPlacement: "outside",
+                    type: "pie",
+                    showInLegend: false,
+                    toolTipContent: "<strong>#percent%</strong>",
+                    dataPoints: values
+                }]
+            });
+            chart.render();
+        }
+    </script>
+
+}
+<style>
+
+    #pieChart, #pieChart2 {
+        height: 360px;
+        width: 100%;
+        border: 5px solid black;
+    }
+   
+    .canvasjs-chart-credit {
+        display: none;
+    }
+    .col-md-6{padding:0px;}
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="pieChart">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="pieChart2">
+            </div>
+        </div>
+    </div>
+</div>

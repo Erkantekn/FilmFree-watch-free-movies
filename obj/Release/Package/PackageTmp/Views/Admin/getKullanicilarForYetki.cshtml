@@ -1,0 +1,59 @@
+﻿@model List<FilmFree.Models.Kullanicilar>
+<style>
+    table thead {
+        background-color: var(--primary-color);
+    }
+</style>
+<table>
+    <thead>
+        <tr>
+            <th>Kullanıcı Adı:</th>
+            <th>Kayıt Tarihi:</th>
+            <th>Yetki</th>
+            <th>Kaydet</th>
+        </tr>
+    </thead>
+    @if (Model != null && Model.Count > 0)
+    {
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.kAdi</td>
+                    <td>@item.KayitTarihi.ToShortDateString()</td>
+                    <td>
+                        <select id="yetki" required onchange="dropdownChanged(this)">
+                            @if (item.Yetki == "A")
+                            {
+                                <option value="A" selected>A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            }
+                            else if (item.Yetki == "B")
+                            {
+                                <option value="A" >A</option>
+                                <option value="B" selected>B</option>
+                                <option value="C">C</option>
+                            }
+                            else if (item.Yetki == "C")
+                            {
+                            <option value="A" >A</option>
+                            <option value="B">B</option>
+                            <option value="C" selected>C</option>
+                            }
+                        </select>
+                        
+                    </td>
+                    <td><a class="btn btn-block btn-success yetkiDegistir" href="javascript:;" data-id="@item.id" data-yetki="@item.Yetki">Kaydet</a></td>
+
+                </tr>
+            }
+
+
+
+
+        </tbody>
+    }
+</table>
+

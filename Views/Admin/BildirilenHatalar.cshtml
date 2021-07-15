@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Bildirilen Film Hataları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<FilmFree.Controllers.AdminController.BildirilenHatalarModel>
+<style>
+    table thead {
+        background-color: var(--primary-color);
+    }
+</style>
+@section script{
+    <script>
+        $('#tableBildirilenHatalar tbody').on('click', '.mesajlari-goruntule', function () {
+            
+                var data = $(this).data("id");
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/getBildirilerinMesajları?filmId=" + data,
+                    success: function (e) {
+                        $("#forBildiriMesajlari").html(e);
+                    }, error: function () {
+                        $("#forBildiriMesajlari").html("Hata Oluştu!");
+                    }
+                });
+        });
+        $('#tableBildirilenHatalar tbody').on('click', '.bildirileri-incele', function () {
+
+            var data = $(this).data("id");
+            var btn = $(this);
+            $.ajax({
+                type: "GET",
+                url: "/Admin/BildirileriIncele?filmId=" + data,
+                success: function (e) {
+                    btn.parent().parent().remove();
+                }, error: function () {
+                    btn.text("Hata Oluştu");
+                }
+            });
+        });
+    </script>
+    }
+<!--Modal Mesajları Göster-->
+<div class="modal" tabindex="-1" role="dialog" id="modalMesajlariGoster" style="z-index:3000;display:none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Filme Ait Bildirililen Hataların Mesajları
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="ref">Kapat</button>
+            </div>
+            <div class="modal-footer">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<section>
+    <div class="container-fluid">
+        <div class="row" id="tableBildirilenHatalar">
+            <a href="/Admin/BildirilenHatalar?statu=1" class="btn btn-warning" style="margin:5px;">İncelenmeyenleri Göster </a> <a href="/Admin/BildirilenHatalar?statu=2" class="btn btn-success" style="margin:5px;">İncelenenleri Göster </a>
+            @if (Model != null && Model.Count != 0)
+            {
+
+
+
+
+                if (Request.QueryString["statu"] != "2")
+                {
+                    <table class="table table-hover table-dark">
+                        <thead>
+
+
+                            <tr>
+                                <th>Film ID</th>
+                                <th>Bildirilen Hata Sayısı</th>
+                                <th>Hata Mesajlarını Görüntüle</th>
+                                <th>Filme Git</th>
+                                <th>Tüm Bildirileri İncelenlenmiş Olarak İşaretle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.filmId</td>
+                                    <td>@item.count</td>
+                                    <td><a class="btn btn-block btn-primary mesajlari-goruntule" href="#forBildiriMesajlari"  data-id="@item.filmId">Mesajları Görüntüle</a></td>
+                                    <td><a class="btn btn-block btn-warning" href="/Home/Izle?id=@item.filmId">Filme Git</a></td>
+                                    <td><a class="btn btn-block btn-danger bildirileri-incele" href="javascript:;" data-id="@item.filmId">Bildirileri İncelenmiş Olarak İşaretle</a></td>
+                                </tr>
+
+
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <table class="table table-hover table-dark">
+                        <thead>
+
+
+                            <tr>
+                                <th>Film ID</th>
+                                <th>Bildirilen Hata Sayısı</th>
+                                <th>Hata Mesajlarını Görüntüle</th>
+                                <th>Filme Git</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.filmId</td>
+                                    <td>@item.count</td>
+                                    <td><a class="btn btn-block btn-primary mesajlari-goruntule" href="javascript:;" data-id="@item.filmId">Mesajları Görüntüle</a></td>
+                                    <td><a class="btn btn-block btn-warning" href="/Home/Izle?id=@item.filmId">Filme Git</a></td>
+                                </tr>
+
+
+                            }
+                        </tbody>
+                    </table>
+                }
+            }
+            else
+            {
+        <div class="col-md-12" style="margin-top:25px;"> <h1>Bildirilen Hata Yok</h1></div>
+            }
+            <div id="forBildiriMesajlari">
+
+            </div>
+        </div>
+    </div>
+</section>

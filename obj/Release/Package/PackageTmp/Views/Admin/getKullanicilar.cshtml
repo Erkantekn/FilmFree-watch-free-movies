@@ -1,0 +1,41 @@
+﻿@model List<FilmFree.Models.Kullanicilar>
+   <style>
+       table thead{
+           background-color:var(--primary-color);
+       }
+   </style>
+<table>
+    <thead>
+        <tr>
+            <th>Kullanıcı Adı:</th>
+            <th>Kayıt Tarihi:</th>
+            <th>Engelle / Engel Kaldır</th>
+        </tr>
+    </thead>
+    @if (Model != null && Model.Count > 0)
+    {
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.kAdi</td>
+                <td>@item.KayitTarihi.ToShortDateString()</td>
+                @if (item.BAN)
+                {
+                    <td><a class="btn btn-block btn-success engeli-kaldir" href="javascript:;" data-id="@item.id">Engeli Kaldır</a></td>
+                }
+                else
+                {
+                    <td><a class="btn btn-block btn-danger engelle" href="javascript:;" data-id="@item.id">Engelle</a></td>
+                }
+
+            </tr>
+            }
+
+            
+
+
+        </tbody>
+        }
+    </table>

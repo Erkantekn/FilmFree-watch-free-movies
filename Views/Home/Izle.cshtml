@@ -1,0 +1,497 @@
+﻿@model FilmFree.Models.Film
+@{
+    ViewBag.Title = ViewData["ttle"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+    //Yorum
+    List<FilmFree.Models.Yorumlar> yorumlar = (List<FilmFree.Models.Yorumlar>)ViewData["Yorumlar"];
+
+    //Kullanici
+    FilmFree.Models.Kullanicilar kullanici = (FilmFree.Models.Kullanicilar)ViewData["kullanici"];
+
+}
+
+
+@section script
+    {
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+   
+    @if (Request.QueryString["iframeId"] == null)
+    {
+        <script>
+                $(document).ready(function () {
+
+                    getIframe(@Model.IframeTablosu.FirstOrDefault().id, null);
+
+                });
+
+
+        </script>
+
+    }
+
+<script>
+
+
+       
+
+        //function getIframe(iframeId, dil) {
+
+        //    var URLL = '/Home/IzleIframe?iframeId=' + iframeId;
+        //    if (dil != null) {
+
+        //        if (dil == "Altyazı") {
+        //            URLL += "&altyaziSecildi=true";
+        //        }
+        //    }
+
+        //    $.ajax({
+        //        url: URLL, //. .serileştirilen değerleri ajax.php dosyasına
+        //        type: 'POST', // post metodu ile
+
+        //        success: function (e) { // gonderme işlemi başarılı ise e değişkeni ile gelen değerleri aldı
+        //            $("#iframe").html("").html(e); // div elemanını her gönderme işleminde boşalttı ve gelen verileri içine attı
+
+
+        //        },
+        //        error: function () {
+        //            $("#iframe").html("").html("Hata Oluştu");
+        //        }
+
+        //    });
+
+
+        function getIframe(iframeId, dil) {
+            try {
+                $('#iframe').html("");
+                $('#dilButton').html("");
+            } catch (d) {
+
+            }
+            var URLL = '/Home/src?iframeId=' + iframeId;
+            if (dil != null) {
+
+                if (dil == "Altyazı") {
+                    URLL += "&altyaziSecildi=true";
+                }
+            }
+            $.ajax({
+                
+                    url: URLL,
+                type: 'POST',
+
+                success: function (e) {
+                    
+                    
+                    if (e.split(',')[1].indexOf("Atom") >= 0 ) {
+
+
+                        $.ajax({
+                            url: e.split(',')[0],
+                            type: "POST",
+                           
+                            success: function (f) { // gonderme işlemi başarılı ise f değişkeni ile gelen değerleri aldı => "url,Kaynakİsmi,dublajButton" ->dublajButton = var,yok;
+                                var iframe = document.createElement('iframe');
+                                $('#iframe').append(iframe);
+                                
+                                
+                                var ff = f;
+                                //Reklam silme aşaması
+                                if (e.split(',')[1].indexOf("Atom") >= 0) {
+
+                                    ff = f.replace(".jw-logo", "none");
+                                }
+
+                                
+
+                                iframe.contentWindow.document.open();
+                                iframe.contentWindow.document.write(ff);
+
+
+                                iframe.contentWindow.document.close();
+                                iframe.id = "dsadsa";
+                                $('#dsadsa').css('width', '100%').css('height', '100%');
+                                
+
+                            },
+                            error: function () {
+                                $("#iframe").html("").html("Hata Oluştu!");
+                            }
+
+                        });
+                    }
+                    else {
+                        //reklamsız olan ve get-post kabul etmeyen siteler
+                        var iframe = document.createElement('iframe');
+                        $('#iframe').append(iframe);
+                        iframe.id = "dsadsa";
+                        $('#dsadsa').css('width', '100%').css('height', '100%');
+                        $('#dsadsa').attr('src', e.split(',')[0]);
+
+                    
+                       
+                        
+                    }
+
+                    try {
+                        //Dublaj altyazı butonu var mı
+                        if (e.split(',')[2] == "var") {
+                            $('#dilButton').append("<div class='col-lg-3 active' style='float:left;' data-dil='Dublaj' data-id='" + iframeId + "'><a href='javascript:;' class='gen-button gen-button-dark'>Dublaj</a></div><div class='col-lg-3' style='float:left;' data-dil='Altyazı' data-id='"+iframeId+"'><a href='javascript:;' class='gen-button'>Altyazı</a></div>")
+                        }
+                    } catch (h) {
+
+                    }
+
+
+                },
+                error: function () {
+                    $("#iframe").html("").html("Hata Oluştu");
+                }
+
+            });
+
+
+
+    };
+    //dublaj değişimi
+    $("#dilButton").on("click", ".col-lg-3", function () {
+
+        var btn = $(this);
+        getIframe(btn.data("id"), btn.data("dil"));
+
+
+    });
+    //kaynak değişimi
+    $("#dropdown-kaynak").on("click", ".dropdown-item", function () {
+
+        var btn = $(this);
+        getIframe(btn.data("id"));
+
+
+    });
+
+</script>
+}
+
+
+
+<div id="hataBildirModal" class="modal" style="display:none;">
+
+    <!-- Modal content -->
+    <div class="modal-content" style="background: linear-gradient(180deg, rgb(33 59 84) 0%, rgb(0 0 0) 100%);">
+
+        <span class="close" id="closeHataBildirModal">&times;</span>
+        <form action="/Home/HataBildir" method="post">
+            <div class="row gt-form">
+                <div class="col-md-12 mb-4">
+                    <input type="text" name="Aciklama" placeholder="Hatayı kısaca açıklayınız." maxlength="200">
+                </div>
+                <div class="col-md-12 mb-4">
+                    <div class="g-recaptcha" data-sitekey="6LcQ7RobAAAAAC8R7i5V6PwDHEkpDxurgEv35yZp"></div>
+                </div>
+                <input type="hidden" value="@Model.id" name="id" />
+                <input type="hidden" value="@HttpContext.Current.Request.Url" name="returnUrl" />
+                <div class="col-md-12 mb-4"> <button type="submit" class="gen-button-dark gen-button">Gönder</button></div>
+            </div>
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- Single movie Start -->
+<section class="gen-section-padding-3 gen-single-movie">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-lg-12">
+                <div class="gen-single-movie-wrapper style-1">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+
+
+                            
+                                <div class="gen-video-holder" id="iframe">
+                                    <!-- İframe ve dublaj/Altyazı butonları buraya geliyor buraya geliyor -->
+                                    </div>
+                                <div class="col-lg-6 dil" id="dilButton">
+
+                                </div>
+
+                                    <div class="col-lg-12 dil">
+                                        <div class="col-lg-3" style="float:right;"><a href="javascript:;" class="gen-button gen-button-dark" style="background: #ff1800;" id="hataBildir">Hata Bildir X</a></div>
+                                    </div>
+
+                                    <div class="btn-group col-lg-12" style="margin-top:15px;">
+                                        <button type="button" class="gen-button gen-button-outline dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Alternatif Linkler
+                                        </button>
+                                        <div class="dropdown-menu gen-button-dark" id="dropdown-kaynak">
+                                            @foreach (var item in Model.IframeTablosu)
+                                            {
+                                                <a class="dropdown-item" href="javascript:;" data-id="@item.id">@item.kaynakIsmi</a>
+                                            }
+
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="gen-single-movie-info">
+                                        <h2 class="gen-title">@Model.Isim</h2>
+                                        <div class="gen-single-meta-holder">
+                                            <ul>
+
+                                                <li>
+                                                    <i class="fas fa-eye">
+                                                    </i>
+                                                    <span>@Model.IzlenmeSayisi İzlenme</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <p>
+                                            @Model.Icerik
+                                        </p>
+                                        <div class="gen-after-excerpt">
+                                            <div class="gen-extra-data">
+                                                <ul>
+                                                    @if (!String.IsNullOrEmpty(Model.Dil))
+                                                    {
+                                                        <li>
+                                                            <span>Dil :</span>
+                                                            <span>@Model.Dil</span>
+                                                        </li>
+                                                    }
+
+
+                                                    <li>
+                                                        <span>Tür :</span>
+                                                        @foreach (var item in Model.FilmTur)
+                                                        {
+
+                                                            <span>><a href="/Home/Filtrele?Tur=@item.id">@item.TurAdi</a></span>
+                                                        }
+
+
+                                                    </li>
+                                                    @if (!String.IsNullOrEmpty(Model.Oyuncular))
+                                                    {
+                                                        <li>
+                                                            <span>Oyuncular :</span>
+                                                            <span>@Model.Oyuncular</span>
+                                                        </li>
+                                                    }
+                                                    @if (!String.IsNullOrEmpty(Model.Tags))
+                                                    {
+                                                        <li>
+                                                            <span>Etiket :</span>
+                                                            @foreach (string item in Model.Tags.Split(','))
+                                                            {
+                                                                <span>@item</span>
+                                                            }
+                                                        </li>
+                                                    }
+
+                                                    <li>
+                                                        <span>Süre :</span>
+                                                        <span>@Model.SureDK Dakika</span>
+                                                    </li>
+
+                                                    @if (Model.YayınTarihi != null)
+                                                    {
+                                                        <li>
+                                                            <span>Yayın Tarihi :</span>
+                                                            <span>@(Model.YayınTarihi.Value.Year.ToString())</span>
+                                                        </li>
+                                                    }
+                                                    @if (!String.IsNullOrEmpty(Model.IMDB))
+                                                    {
+                                                        <li>
+                                                            <span>IMDB :</span>
+                                                            <span>@Model.IMDB</span>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                            @*<div class="gen-socail-share">
+                    <h4 class="align-self-center">Social Share :</h4>
+                    <ul class="social-inner">
+                        <li>
+                            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li>
+                            <a href="#" class="facebook"><i class="fab fa-instagram"></i></a>
+                        </li>
+                        <li><a href="#" class="facebook"><i class="fab fa-twitter"></i></a></li>
+                    </ul>
+                </div>*@
+                                        </div>
+                                    </div>
+                                </div>
+
+                        <div class="col-lg-12">
+                            <div class="pm-inner">
+                                <div class="gen-more-like">
+                                    <div class="row">
+                                        <div class="col-xl-12 yorumlar">
+                                            <h2 class="mb-5 ">Yorumlar</h2>
+                                            @if (yorumlar != null && yorumlar.Count > 0)
+                                            {
+                                                <ul id="yorum">
+                                                    @foreach (var item in yorumlar)
+                                                    {
+                                                        <li>
+                                                            <span class="isim">@item.Ad</span>
+                                                            <time class="tarih">@item.Tarih.ToShortDateString()</time>
+                                                            <p>@item.Yorum</p>
+                                                        </li>
+                                                    }
+
+                                                </ul>
+                                                if (yorumlar.Count >= 3)
+                                                {
+                                                    <ul style="list-style:none;">
+                                                        <li>
+                                                            <a href="javascript:;" class="gen-button" data-filmId="@Model.id" data-sayfa="1" id="yorumGoruntule">Daha fazla yorum</a>
+                                                        </li>
+                                                    </ul>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <ul id="yorum">
+                                                    <li>
+                                                        <span class="isim">Bu filme daha önce hiç yorum yap yapılmamış. İlk yorumu siz yapın.</span>
+                                                    </li>
+                                                </ul>
+
+                                            }
+                                        </div>
+                                        <div class="col-xl-12">
+                                            <h2 class="mb-5">Yorum Ekle</h2>
+                                            <form action="/Home/YorumEkle?id=@Model.id&returnUrl=@HttpContext.Current.Request.Url" method="post">
+                                                <div class="row gt-form">
+                                                    <div class="col-md-6 mb-4">
+                                                        @if (kullanici != null)
+                                                        {
+                                                            <input type="text" name="Ad" placeholder="Adınız" required="" maxlength="50" value="@kullanici.Ad" readonly>
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="text" name="Ad" placeholder="Adınız" required="" maxlength="50">
+                                                        }
+
+                                                    </div>
+                                                    @if (kullanici != null)
+                                                    {
+                                                        <div class="col-md-6 mb-4"><input type="email" name="Mail" placeholder="Mail Adresiniz" required="" maxlength="50" value="@kullanici.Mail" readonly></div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="col-md-6 mb-4"><input type="email" name="Mail" placeholder="Mail Adresiniz" required="" maxlength="50"></div>
+                                                    }
+
+
+                                                    <div class="col-md-12 mb-4">
+                                                        <textarea name="Yorum" rows="4" placeholder="Yorumunuz" required="" maxlength="200"></textarea><br>
+                                                    </div>
+                                                    <div class="g-recaptcha col-md-12 mb-4" data-sitekey="6LcQ7RobAAAAAC8R7i5V6PwDHEkpDxurgEv35yZp"></div>
+                                                    <div class="col-md-12 mb-4">
+                                                        <input type="submit" value="Gönder" class="mt-4">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        @if (ViewData["benzerFilm"] != null && ((List<FilmFree.Models.Film>)ViewData["benzerFilm"]).Count != 0)
+                        {
+                            <div class="col-lg-12">
+                                <div class="pm-inner">
+                                    <div class="gen-more-like">
+                                        <h5 class="gen-more-title">Benzer Filmler</h5>
+                                        <div class="row">
+                                            @foreach (var item in ((List<FilmFree.Models.Film>)ViewData["benzerFilm"]))
+                                            {
+                                                <div class="col-xl-3 col-lg-4 col-md-6">
+                                                    <div class="gen-carousel-movies-style-1 movie-grid style-1">
+                                                        <div class="gen-movie-contain">
+                                                            <div class="gen-movie-img">
+                                                                @if (string.IsNullOrEmpty(item.ResimYol) || item.ResimYol == "null" || item.ResimYol == "NULL")
+                                                                {
+                                                                    <img src="~/images/background/asset-5.jpeg" alt="FilmFree Reklamsız Film">
+                                                                }
+                                                                else
+                                                                {
+                                                                    <img src="~/images/film/@item.ResimYol" alt="FilmFree Reklamsız Film">
+
+                                                                }
+                                                                <div class="gen-movie-add">
+                                                                    <div class="wpulike wpulike-heart ">
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="gen-movie-action">
+                                                                    <a href="/Home/Izle?id=@item.id" class="gen-button">
+                                                                        <i class="fa fa-play"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="gen-info-contain">
+                                                                <div class="gen-movie-info">
+                                                                    <h3>
+                                                                        <a href="single-movie.html">
+                                                                            @item.Isim
+                                                                        </a>
+                                                                    </h3>
+                                                                </div>
+                                                                <div class="gen-movie-meta-holder">
+                                                                    <ul>
+                                                                        @if (item.Dil == "TürkçeDublaj")
+                                                                        {
+                                                                            <li>Dublaj</li>
+                                                                        }
+                                                                        else if (item.Dil == "TürkçeAltyazılı")
+                                                                        {
+                                                                            <li>Altyazı</li>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <li>Dublaj / Altyazı</li>
+                                                                        }
+                                                                        <li>
+                                                                            <a href="/Home/Filtrele?Tur=@item.FilmTur.FirstOrDefault().id"><span>@item.FilmTur.FirstOrDefault().TurAdi</span></a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
+
+
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Single movie End -->

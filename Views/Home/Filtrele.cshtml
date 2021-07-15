@@ -1,0 +1,138 @@
+﻿
+@{
+    ViewBag.Title = ViewData["ttle"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    //Begenilen filmler için
+    bool girisYapilmis = false;
+    if ((List<int>)ViewData["begenilenFilmIdler"] != null)
+    { girisYapilmis = true; }
+}
+
+@using PagedList
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<FilmFree.Models.Film>
+@if (Model != null && Model.Count!=0)
+{
+
+
+
+<!-- Section-1 Start -->
+<section class="gen-section-padding-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-xl-3 col-lg-4 col-md-6">
+                            <div class="gen-carousel-movies-style-1 movie-grid style-1">
+                                <div class="gen-movie-contain">
+                                    <div class="gen-movie-img">
+                                        @if (!String.IsNullOrEmpty(item.ResimYol))
+                                        {
+                                            <img src="~/images/film/@item.ResimYol" alt="FilmFree Reklamsız Film">
+                                        }
+                                        else
+                                        {
+                                            <img src="~/images/background/asset-5.jpeg" alt="FilmFree Reklamsız Film">
+                                        }
+
+                                        <div class="gen-movie-add">
+                                            <div class="wpulike wpulike-heart ">
+                                                <div class="wp_ulike_general_class">
+                                                    <a href="javascript:;" id="filmBegen" data-id="@item.id">
+                                                        @item.BegenilmeSayisi
+                                                        @if (girisYapilmis && ((List<int>)ViewData["begenilenFilmIdler"]).Contains(item.id))
+                                                        {
+                                                            <span class="fa fa-heart"></span>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="wp_ulike_btn wp_ulike_put_image"></span>
+                                                        }
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="gen-movie-action">
+                                            <a href="/Home/Izle?id=@item.id" class="gen-button">
+                                                <i class="fa fa-play"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="gen-info-contain">
+                                        <div class="gen-movie-info">
+                                            <h3>
+                                                <a href="/Home/Izle?id=@item.id">
+                                                    @item.Isim
+                                                </a>
+                                            </h3>
+                                        </div>
+                                        <div class="gen-movie-meta-holder">
+                                            <ul>
+                                                @if (item.Dil == "TürkçeDublaj")
+                                                {
+                                                    <li>Dublaj</li>
+                                                }
+                                                else if (item.Dil == "TürkçeAltyazılı")
+                                                {
+                                                    <li>Altyazı</li>
+                                                }
+                                                else
+                                                {
+                                                    <li>Dublaj / Altyazı</li>
+                                                }
+                                                
+                                                <li>
+                                                    <a href="/Home/Filtrele?Tur=@item.FilmTur.FirstOrDefault().id"><span>@item.FilmTur.FirstOrDefault().TurAdi</span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                @Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Filtrele", new { sayfa, Encok = Request.QueryString["Encok"], Tur = Request.QueryString["Tur"], Ara = Request.QueryString["Ara"] }), PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
+           {
+               LinkToFirstPageFormat = "<<",
+               LinkToPreviousPageFormat = "<",
+               LinkToNextPageFormat = ">",
+               LinkToLastPageFormat = ">>",
+               //DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+               //DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+               //DisplayLinkToLastPage = PagedListDisplayMode.Always,
+               //DisplayLinkToNextPage = PagedListDisplayMode.Always,
+               MaximumPageNumbersToDisplay = 1,
+               DisplayEllipsesWhenNotShowingAllPageNumbers = false,
+           }, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "some_grid_container" }))
+            </div>
+        </div>
+    </div>
+    
+</section>
+<!-- Section-1 End -->
+}
+else
+{
+    <section class="gen-section-padding-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row">
+                    <h2>Hiçbir kayıt bulunamadı.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}

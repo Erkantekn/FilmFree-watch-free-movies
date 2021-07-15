@@ -1,0 +1,30 @@
+﻿@model FilmFree.Models.Film
+
+@if (Model != null)
+{
+
+
+<table>
+    <tr>
+        <td>Film ID:</td>
+        <td id="filmId">@Model.id</td>
+    </tr>
+    <tr>
+        <td>Film İsmi:</td>
+        <td>@Model.Isim</td>
+    </tr>
+    <tr>
+        <td>Oyuncular:</td>
+        <td>@Model.Oyuncular</td>
+    </tr>
+    <tr>
+        <td>Yapım Tarihi:</td>
+        <td>@Model.YayınTarihi.Value.Year.ToString()</td>
+    </tr>
+
+</table>
+}
+else
+{
+<h2 id="nulls">NULL</h2>
+}

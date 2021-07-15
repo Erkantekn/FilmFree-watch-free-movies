@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Kullanıcı Engelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<FilmFree.Models.Kullanicilar>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12" id="araKullanici">
+                <form action="javascript:void(0);">
+                    <div class="col-md-9" style="float:left;">
+                        <input name="ara" type="text" placeholder="Kullanıcı Adı Arayın.." required maxlength="20" />
+                    </div>
+                    <div class="col-md-3" style="float:right;">
+                        <input type="submit" class="btn btn-primary btn-block" value="Ara" />
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+        <div class="row" style="margin-top:20px;">
+            <div class="col-md-12" id="tableKullanici">
+               
+            </div>
+        </div>
+    </div>
+</section>
+
+@section script{
+    <script>
+        $("#araKullanici form").submit(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Admin/getKullanicilar",
+                data: $(this).serialize(),
+                success: function (e) {
+                    $('#tableKullanici').html(e);
+
+                }
+            });
+        });
+        $('#tableKullanici').on('click', '.engelle', function () {
+            var data = $(this).data("id");
+            var btn = $(this);
+            $.ajax({
+                type: "GET",
+                url: "/Admin/Engelle?id=" + data,
+                success: function () {
+                    $(btn).removeClass("btn-danger"); $(btn).removeClass("engelle"); $(btn).addClass("btn-success"); $(btn).addClass("engeli-kaldir"); $(btn).text("Engeli Kaldır");
+                },
+                error: function () {
+                    $(btn).text("HATA");
+                }
+            });
+        });
+        $('#tableKullanici').on('click', '.engeli-kaldir', function () {
+            var data = $(this).data("id");
+            var btn = $(this);
+            $.ajax({
+                type: "GET",
+                url: "/Admin/EngelAc?id=" + data,
+                success: function () {
+                    $(btn).removeClass("btn-success"); $(btn).removeClass("engeli-kaldir"); $(btn).addClass("btn-danger"); $(btn).addClass("engelle"); $(btn).text("Engelle");
+                },
+                error: function () {
+
+                }
+            });
+        });
+    </script>
+    }

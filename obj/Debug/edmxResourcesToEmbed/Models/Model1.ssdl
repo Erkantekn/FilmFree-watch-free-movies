@@ -1,0 +1,339 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FilmFreeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="anasayfaSlayt">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="filmId" Type="int" Nullable="false" />
+    <Property Name="onerimSekli" Type="nvarchar" MaxLength="500" />
+    <Property Name="resimYoluHD" Type="nvarchar" MaxLength="4000" />
+    <Property Name="resimYoluHD_2" Type="nvarchar" MaxLength="4000" />
+  </EntityType>
+  <EntityType Name="BegenilerTablosu">
+    <Key>
+      <PropertyRef Name="KullaniciId" />
+      <PropertyRef Name="FilmId" />
+    </Key>
+    <Property Name="KullaniciId" Type="int" Nullable="false" />
+    <Property Name="FilmId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BildirilenHatalar">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="filmId" Type="int" Nullable="false" />
+    <Property Name="Aciklama" Type="nvarchar" MaxLength="200" />
+    <Property Name="Tarih" Type="datetime" />
+    <Property Name="incelendiMi" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Film">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Isim" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SureDK" Type="int" Nullable="false" />
+    <Property Name="YayınTarihi" Type="datetime" />
+    <Property Name="ResimYol" Type="nvarchar" MaxLength="500" />
+    <Property Name="Icerik" Type="nvarchar" MaxLength="4000" />
+    <Property Name="Oyuncular" Type="nvarchar" MaxLength="500" />
+    <Property Name="Tags" Type="nvarchar" MaxLength="500" />
+    <Property Name="IzlenmeSayisi" Type="int" Nullable="false" />
+    <Property Name="YorumSayisi" Type="int" Nullable="false" />
+    <Property Name="BegenilmeSayisi" Type="int" Nullable="false" />
+    <Property Name="eklenmeTarihi" Type="datetime" />
+    <Property Name="IMDB" Type="nvarchar" MaxLength="5" />
+    <Property Name="ErisimEngelli" Type="bit" Nullable="false" />
+    <Property Name="Dil" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="FilmTur">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TurAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GonderilenMailler">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="KullaniciId" Type="int" Nullable="false" />
+    <Property Name="GonderimTipiId" Type="int" Nullable="false" />
+    <Property Name="GonderimZamani" Type="datetime" Nullable="false" />
+    <Property Name="IslemGerceklestiMi" Type="bit" Nullable="false" />
+    <Property Name="token" Type="nvarchar" MaxLength="500" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GonderilenMailTipleri">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TipAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ZamanAsimiSuresiDKCinsi" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IframeTablosu">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kaynakIsmi" Type="nvarchar" MaxLength="60" Nullable="false" />
+    <Property Name="kaynakLinki" Type="nvarchar" MaxLength="4000" />
+    <Property Name="VarsaTrAltyazi" Type="nvarchar" MaxLength="4000" />
+    <Property Name="VarsaTrDublaj" Type="nvarchar" MaxLength="4000" />
+    <Property Name="filmId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="IletisimFormu">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Konu" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Mesaj" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Tarih" Type="datetime" Nullable="false" />
+    <Property Name="OkunduMu" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Kullanicilar">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="kAdi" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Mail" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Sifre" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+    <Property Name="Soyad" Type="nvarchar" MaxLength="50" />
+    <Property Name="Dogrulama" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="MailOnayliMi" Type="bit" Nullable="false" />
+    <Property Name="Yetki" Type="nvarchar" MaxLength="1" Nullable="false" />
+    <Property Name="KayitTarihi" Type="datetime" Nullable="false" />
+    <Property Name="BAN" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TurEslestirmeTablosu">
+    <Key>
+      <PropertyRef Name="filmId" />
+      <PropertyRef Name="turId" />
+    </Key>
+    <Property Name="filmId" Type="int" Nullable="false" />
+    <Property Name="turId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Yorumlar">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="filmId" Type="int" Nullable="false" />
+    <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+    <Property Name="Mail" Type="nvarchar" MaxLength="50" />
+    <Property Name="Yorum" Type="nvarchar" MaxLength="200" />
+    <Property Name="Tarih" Type="datetime" Nullable="false" />
+    <Property Name="onayliMi" Type="bit" Nullable="false" />
+    <Property Name="onaylayanId" Type="int" />
+    <Property Name="onaylanmaTarihi" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_anasayfaSlayt_Film">
+    <End Role="Film" Type="Self.Film" Multiplicity="1" />
+    <End Role="anasayfaSlayt" Type="Self.anasayfaSlayt" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="anasayfaSlayt">
+        <PropertyRef Name="filmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BegenilerTablosu_Film">
+    <End Role="Film" Type="Self.Film" Multiplicity="1" />
+    <End Role="BegenilerTablosu" Type="Self.BegenilerTablosu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BegenilerTablosu">
+        <PropertyRef Name="FilmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BegenilerTablosu_Kullanicilar1">
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="1" />
+    <End Role="BegenilerTablosu" Type="Self.BegenilerTablosu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BegenilerTablosu">
+        <PropertyRef Name="KullaniciId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BildirilenHatalar_Film">
+    <End Role="Film" Type="Self.Film" Multiplicity="1" />
+    <End Role="BildirilenHatalar" Type="Self.BildirilenHatalar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BildirilenHatalar">
+        <PropertyRef Name="filmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GonderilenMailler_GonderilenMailTipleri">
+    <End Role="GonderilenMailTipleri" Type="Self.GonderilenMailTipleri" Multiplicity="1" />
+    <End Role="GonderilenMailler" Type="Self.GonderilenMailler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GonderilenMailTipleri">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="GonderilenMailler">
+        <PropertyRef Name="GonderimTipiId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GonderilenMailler_Kullanicilar">
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="1" />
+    <End Role="GonderilenMailler" Type="Self.GonderilenMailler" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="GonderilenMailler">
+        <PropertyRef Name="KullaniciId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IframeTablosu_Film">
+    <End Role="Film" Type="Self.Film" Multiplicity="1" />
+    <End Role="IframeTablosu" Type="Self.IframeTablosu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="IframeTablosu">
+        <PropertyRef Name="filmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TurEslestirmeTablosu_Film">
+    <End Role="Film" Type="Self.Film" Multiplicity="1" />
+    <End Role="TurEslestirmeTablosu" Type="Self.TurEslestirmeTablosu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TurEslestirmeTablosu">
+        <PropertyRef Name="filmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TurEslestirmeTablosu_FilmTur">
+    <End Role="FilmTur" Type="Self.FilmTur" Multiplicity="1" />
+    <End Role="TurEslestirmeTablosu" Type="Self.TurEslestirmeTablosu" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FilmTur">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TurEslestirmeTablosu">
+        <PropertyRef Name="turId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yorumlar_Film">
+    <End Role="Film" Type="Self.Film" Multiplicity="1" />
+    <End Role="Yorumlar" Type="Self.Yorumlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Film">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Yorumlar">
+        <PropertyRef Name="filmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Yorumlar_Kullanicilar">
+    <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+    <End Role="Yorumlar" Type="Self.Yorumlar" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Yorumlar">
+        <PropertyRef Name="onaylayanId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FilmFreeModelStoreContainer">
+    <EntitySet Name="anasayfaSlayt" EntityType="Self.anasayfaSlayt" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BegenilerTablosu" EntityType="Self.BegenilerTablosu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BildirilenHatalar" EntityType="Self.BildirilenHatalar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Film" EntityType="Self.Film" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FilmTur" EntityType="Self.FilmTur" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GonderilenMailler" EntityType="Self.GonderilenMailler" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GonderilenMailTipleri" EntityType="Self.GonderilenMailTipleri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IframeTablosu" EntityType="Self.IframeTablosu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IletisimFormu" EntityType="Self.IletisimFormu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TurEslestirmeTablosu" EntityType="Self.TurEslestirmeTablosu" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Yorumlar" EntityType="Self.Yorumlar" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_anasayfaSlayt_Film" Association="Self.FK_anasayfaSlayt_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="anasayfaSlayt" EntitySet="anasayfaSlayt" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BegenilerTablosu_Film" Association="Self.FK_BegenilerTablosu_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="BegenilerTablosu" EntitySet="BegenilerTablosu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BegenilerTablosu_Kullanicilar1" Association="Self.FK_BegenilerTablosu_Kullanicilar1">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="BegenilerTablosu" EntitySet="BegenilerTablosu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BildirilenHatalar_Film" Association="Self.FK_BildirilenHatalar_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="BildirilenHatalar" EntitySet="BildirilenHatalar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GonderilenMailler_GonderilenMailTipleri" Association="Self.FK_GonderilenMailler_GonderilenMailTipleri">
+      <End Role="GonderilenMailTipleri" EntitySet="GonderilenMailTipleri" />
+      <End Role="GonderilenMailler" EntitySet="GonderilenMailler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GonderilenMailler_Kullanicilar" Association="Self.FK_GonderilenMailler_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="GonderilenMailler" EntitySet="GonderilenMailler" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IframeTablosu_Film" Association="Self.FK_IframeTablosu_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="IframeTablosu" EntitySet="IframeTablosu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TurEslestirmeTablosu_Film" Association="Self.FK_TurEslestirmeTablosu_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="TurEslestirmeTablosu" EntitySet="TurEslestirmeTablosu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TurEslestirmeTablosu_FilmTur" Association="Self.FK_TurEslestirmeTablosu_FilmTur">
+      <End Role="FilmTur" EntitySet="FilmTur" />
+      <End Role="TurEslestirmeTablosu" EntitySet="TurEslestirmeTablosu" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yorumlar_Film" Association="Self.FK_Yorumlar_Film">
+      <End Role="Film" EntitySet="Film" />
+      <End Role="Yorumlar" EntitySet="Yorumlar" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Yorumlar_Kullanicilar" Association="Self.FK_Yorumlar_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+      <End Role="Yorumlar" EntitySet="Yorumlar" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

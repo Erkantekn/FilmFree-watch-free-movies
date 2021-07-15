@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "İletişime Geç";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section head{
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+}
+
+
+<section class="gen-section-padding-3">
+    <div class="container container-2">
+        <div class="row">
+            <div class="col-xl-12 col-md-12 mt-12 mt-xl-0">
+                <div class="gen-icon-box-style-1">
+                    <div class="gen-icon-box-icon">
+                        <span class="gen-icon-animation">
+                            <i class="far fa-envelope"></i>
+                        </span>
+                    </div>
+                    <div class="gen-icon-box-content">
+                        <h3 class="pt-icon-box-title mb-2">
+                            <span>Mail</span>
+                        </h3>
+                        <p class="gen-icon-box-description">destek@filmfree.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="gen-section-padding-3 gen-top-border">
+    <div class="container container-2">
+        <div class="row">
+            <div class="col-xl-12">
+                <h2 class="mb-5">İletişim Formu</h2>
+                <form action="/Home/Iletisim" method="post">
+                    <div class="row gt-form">
+                        <div class="col-md-6 mb-4">
+                            <input type="text" name="Ad" placeholder="Adınız" required maxlength="50">
+                        </div>
+                        <div class="col-md-6 mb-4"><input type="email" name="Mail" placeholder="Mail Adresiniz" required maxlength="50"></div>
+
+                        <div class="col-md-12 mb-4"><input type="text" name="Konu" placeholder="Konu" required maxlength="50"></div>
+                        <div class="col-md-12 mb-4">
+                            <textarea name="Mesaj" rows="6" placeholder="Mesajınız" required maxlength="500"></textarea><br>
+                        </div>
+                        <div class="g-recaptcha col-md-12 mb-4" data-sitekey="6LcQ7RobAAAAAC8R7i5V6PwDHEkpDxurgEv35yZp"></div>
+                        <div class="col-md-12 mb-4">
+                            <input type="submit" value="Gönder" class="mt-4">
+                        </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+

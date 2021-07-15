@@ -1,0 +1,138 @@
+﻿@{
+    List<FilmFree.Models.FilmTur> idOfFilmTur = (List<FilmFree.Models.FilmTur>)ViewData["idOfFilmTur"];
+    
+    //Begenilen filmler için
+    bool girisYapilmis = false;
+    if ((List<int>)ViewData["begenilenFilmIdler"] != null)
+    { girisYapilmis = true; }
+
+}
+@{
+    ViewBag.Title = "Filmler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@foreach (var item in idOfFilmTur)
+{
+    if (item.Film.Count != 0)
+    {
+    <!-- owl-carousel Videos Section-1 Start -->
+    <section class="gen-section-padding-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6">
+                    <h4 class="gen-heading-title">@item.TurAdi</h4>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-inline-block">
+                    <div class="gen-movie-action">
+                        <div class="gen-btn-container text-right">
+                            <a href="/Home/Filtrele?Tur=@item.id" class="gen-button gen-button-flat">
+                                <span class="text">Daha Fazla</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="gen-style-2">
+                        <div class="owl-carousel owl-loaded owl-drag" data-dots="false" data-nav="true" data-desk_num="4"
+                             data-lap_num="3" data-tab_num="2" data-mob_num="1" data-mob_sm="1" data-autoplay="false"
+                             data-loop="false" data-margin="30">
+
+                            @foreach (var film in (List<FilmFree.Models.Film>)ViewData["FilmTur" + item.id])
+                            {
+
+
+
+                                <div class="item">
+                                    <div class="movie type-movie status-publish has-post-thumbnail">
+                                        <div class="gen-carousel-movies-style-2 movie-grid style-2">
+                                            <div class="gen-movie-contain">
+                                                <div class="gen-movie-img">
+                                                    @if ( string.IsNullOrEmpty(film.ResimYol) || film.ResimYol == "null" || film.ResimYol == "NULL" )
+                                                    {
+                                                        <img src="~/images/background/asset-5.jpeg" alt="owl-carousel-video-image">
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="~/images/film/@film.ResimYol" alt="owl-carousel-video-image">
+                                                       
+                                                     }
+
+                                                    <div class="gen-movie-add">
+                                                        <div class="wpulike wpulike-heart">
+                                                            <div class="wp_ulike_general_class wp_ulike_is_not_liked">
+
+                                                                <a href="javascript:;" id="filmBegen" data-id="@film.id">
+                                                                    @film.BegenilmeSayisi
+                                                                @if (girisYapilmis && ((List<int>)ViewData["begenilenFilmIdler"]).Contains(film.id))
+                                                                {
+                                                                    <span class="fa fa-heart"></span>
+
+                                                                }
+                                                                else
+                                                                {
+                                                                    <span class="wp_ulike_btn wp_ulike_put_image"></span>
+                                                                }
+                                                            </a>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="gen-movie-action">
+                                                    <a href="/Home/Izle?id=@film.id" class="gen-button">
+                                                        <i class="fa fa-play"></i>
+                                                    </a>
+                                                </div>
+                                                </div>
+                                                <div class="gen-info-contain">
+                                                    <div class="gen-movie-info">
+                                                        <h3>
+                                                            <a href="/Home/Izle?id=@film.id">
+                                                                @film.Isim
+                                                            </a>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="gen-movie-meta-holder">
+                                                        <ul>
+                                                            @if (film.Dil == "TürkçeDublaj")
+                                                            {
+                                                                <li>Dublaj</li>
+                                                            }
+                                                            else if (film.Dil == "TürkçeAltyazılı")
+                                                            {
+                                                                <li>Altyazı</li>
+                                                            }
+                                                            else
+                                                            {
+                                                                <li>Dublaj / Altyazı</li>
+                                                            }
+                                                            <li>
+                                                                <a href="/Home/Filtrele?Tur=@item.id"><span>@item.TurAdi</span></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- #post-## -->
+                                </div>
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- owl-carousel Videos Section-1 End -->
+
+    }
+}
+

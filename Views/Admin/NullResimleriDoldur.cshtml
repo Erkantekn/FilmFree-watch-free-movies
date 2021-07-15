@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Null Resimleri Doldur";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section script{
+    <script>
+        var offset = 0;
+        var filmId = 0;
+        var maxOffset= @ViewData["countNull"];
+        $(document).ready(function () {
+            $.ajax({
+                url: " /Admin/getNullResimFilm",
+                type: "POST",
+                success: function (e) {
+                        $('#icerik').html(e);
+                        $('#filmIdInput').val($(e).find('#filmId').text());
+                    
+                    if ($('#nulls').text() == "NULL") {
+
+                        $('#nullResimler').html("<div class='row'><h2>Resimsiz olan film bulunamadı.</h2></div>");
+                    }
+            
+                    
+                },
+                error: function () {
+                    $('#icerik').html("Veriler çekilirken hata oluştu.");
+                }
+            });
+        });
+        $('#buttons').on('click', '.sonraki', function () {
+            offset++;
+            if (offset >= maxOffset)
+                offset = maxOffset-1;
+            $.ajax({
+                url: " /Admin/getNullResimFilm?offset="+offset,
+                type: "POST",
+                success: function (e) {
+                    $('#icerik').html(e);
+                    $('#filmIdInput').val($(e).find('#filmId').text());
+                },
+                error: function () {
+                    offset
+                    $('#icerik').html("Veriler çekilirken hata oluştu.");
+                }
+            });
+        });
+        $('#buttons').on('click', '.onceki', function () {
+            offset--;
+            if (offset <= 0)
+                offset = 0;
+            $.ajax({
+                url: " /Admin/getNullResimFilm?offset=" + offset,
+                type: "POST",
+                success: function (e) {
+                    $('#icerik').html(e);
+                    $('#filmIdInput').val($(e).find('#filmId').text());
+                },
+                error: function () {
+                    offset
+                    $('#icerik').html("Veriler çekilirken hata oluştu.");
+                }
+            });
+        });
+
+       
+
+    </script>
+    }
+<section>
+    <div class="container-fluid" id="nullResimler">
+        <div class="row">
+            <div class="col-md-12"><h3 style="margin:10px;text-align:center;">@ViewData["countNull"] Adet Resmi Olmayan Film Var.</h3></div>
+            <div class="col-md-12" id="icerik">
+                İçerik
+            </div>
+            
+        </div>
+        <div class="row" id="buttons">
+            <div class="col-md-3"><a class="btn btn-block btn-warning onceki" href="javascript:;"> Önceki</a></div>
+            <div class="col-md-6">
+
+            </div>
+            <div class="col-md-3"><a class="btn btn-block btn-warning sonraki" href="javascript:;"> Sonraki</a></div>
+        </div>
+        <div class="row" style="margin-top:15px;">
+            <div class="col-md-12" id="formResim">
+                <form action="/Admin/NullResimiDoldur" method="post">
+                    <input type="text" placeholder="Resim URL'sini giriniz" id="urlResim" name="urlResim" required />
+                    <input type="hidden" name="filmIdInput" id="filmIdInput" value="" required/>
+                    <input type="submit" class="btn btn-success btn-block" value="Resimi Ekle" />
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+

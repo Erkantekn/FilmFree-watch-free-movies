@@ -1,0 +1,41 @@
+﻿@model FilmFree.Models.IletisimFormu
+@section script{
+    <script>
+    
+        </script>}
+<table id="iletisimFormuDetay">
+    <tr>
+        <td>id:</td>
+        <td>@Model.id</td>
+    </tr>
+    <tr>
+        <td>Ad:</td>
+        <td>@Model.Ad</td>
+    </tr>
+    <tr>
+        <td>Mail:</td>
+        <td>@Model.Mail</td>
+    </tr>
+    <tr>
+        <td>Konu:</td>
+        <td><p>@Model.Konu</p></td>
+    </tr>
+    <tr>
+        <td>Mesaj:</td>
+        <td><p>@Model.Mesaj</p></td>
+    </tr>
+    <tr>
+        <td>Tarih</td>
+        <td>@Model.Tarih.ToString()</td>
+    </tr>
+    <tr>
+        <td>Durum:</td>
+       
+            <td>
+                <a class="btn btn-primary iletisimForm-okunmadi" href="javascript:;" data-id="@Model.id">Okunmadı Olarak İşaretle</a> 
+                <a class="btn btn-danger iletisimForm-sil" href="javascript:;" data-id="@Model.id">Sil</a>
+            </td>
+        
+
+    </tr>
+</table>

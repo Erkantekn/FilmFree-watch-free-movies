@@ -1,0 +1,19 @@
+﻿@model List<FilmFree.Models.BildirilenHatalar> 
+    <table>
+       <thead>
+           <tr>
+               <th>Tarih</th>
+               <th>Açıklama</th>
+           </tr>
+       </thead>
+       <tbody>
+           @foreach (var item in Model)
+           {
+               <tr>
+                   <td>@item.Tarih.Value.ToShortDateString()</td>
+                   <td><p>@item.Aciklama</p></td>
+               </tr>
+           }
+
+       </tbody>
+    </table>

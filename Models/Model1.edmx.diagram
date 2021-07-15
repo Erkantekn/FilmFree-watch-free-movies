@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="98b856417f494466b0c423c6ecee200b" Name="Diagram1">
+        <EntityTypeShape EntityType="FilmFreeModel.BildirilenHatalar" Width="1.5" PointX="3" PointY="3.625" />
+        <EntityTypeShape EntityType="FilmFreeModel.Film" Width="1.5" PointX="0.75" PointY="7.125" />
+        <EntityTypeShape EntityType="FilmFreeModel.FilmTur" Width="1.5" PointX="3" PointY="14.875" />
+        <EntityTypeShape EntityType="FilmFreeModel.GonderilenMailler" Width="1.5" PointX="5.25" PointY="13" />
+        <EntityTypeShape EntityType="FilmFreeModel.GonderilenMailTipleri" Width="1.5" PointX="3" PointY="7.375" />
+        <EntityTypeShape EntityType="FilmFreeModel.IframeTablosu" Width="1.5" PointX="3" PointY="17.125" />
+        <EntityTypeShape EntityType="FilmFreeModel.IletisimFormu" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FilmFreeModel.Kullanicilar" Width="1.5" PointX="3" PointY="10.375" />
+        <EntityTypeShape EntityType="FilmFreeModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FilmFreeModel.Yorumlar" Width="1.5" PointX="5.25" PointY="9.125" />
+        <AssociationConnector Association="FilmFreeModel.FK_BildirilenHatalar_Film" />
+        <AssociationConnector Association="FilmFreeModel.FK_IframeTablosu_Film" />
+        <AssociationConnector Association="FilmFreeModel.FK_Yorumlar_Film" />
+        <AssociationConnector Association="FilmFreeModel.FK_GonderilenMailler_GonderilenMailTipleri" />
+        <AssociationConnector Association="FilmFreeModel.FK_GonderilenMailler_Kullanicilar" />
+        <AssociationConnector Association="FilmFreeModel.FK_Yorumlar_Kullanicilar" />
+        <AssociationConnector Association="FilmFreeModel.BegenilerTablosu" />
+        <AssociationConnector Association="FilmFreeModel.TurEslestirmeTablosu" />
+        <EntityTypeShape EntityType="FilmFreeModel.anasayfaSlayt" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="FilmFreeModel.FK_anasayfaSlayt_Film" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

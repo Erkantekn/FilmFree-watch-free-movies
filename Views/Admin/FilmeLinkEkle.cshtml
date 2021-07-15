@@ -1,0 +1,220 @@
+﻿
+@{
+    ViewBag.Title = "Filme Link ekle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .dropbtn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+        .dropbtn:hover, .dropbtn:focus {
+            background-color: #3e8e41;
+        }
+
+    #myInput {
+        box-sizing: border-box;
+        background-position: 14px 12px;
+        background-repeat: no-repeat;
+        font-size: 16px;
+        padding: 14px 20px 12px 45px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+        #myInput:focus {
+            outline: 3px solid #ddd;
+        }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f6f6f6;
+        min-width: 230px;
+        overflow: auto;
+        border: 1px solid #ddd;
+        z-index: 1;
+        max-height:450px;
+    }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+    .dropdown a:hover {
+        background-color: #ddd;
+    }
+
+    .show {
+        display: block;
+    }
+</style>
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dropdown">
+                    <button onclick="myFunction()" class="dropbtn">Film Seçmek İçin Tıklayınız</button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <input type="text" placeholder="Film Ara.." id="myInput" onkeyup="filterFunction()">
+
+                        @foreach (var item in (List<SelectListItem>)ViewData["filmListesi"])
+                        {
+                            <a href="#LinkEkleDiv" data-id="@item.Value">@item.Value - @item.Text</a>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" id="LinkEkleDiv">
+
+            </div>
+            <div class="col-md-12" id="LinkEkleYeniDiv" style="display:none;margin:15px;">
+                <select id="linkTur" required onchange="dropdownChanged()">
+                    <option disabled selected value>Linkin türünü seçiniz</option>
+                    <option value="tur1">Tek Link</option>
+                    <option value="tur2">Dublaj linki ayrı Altyazı linki ayrı</option>
+                </select>
+            </div>
+            <div class="col-md-12" id="linkTur1" style="display:none;">
+                <form action="javascript:void(0);">
+                    <input type="text" maxlength="60" required placeholder="Kaynağın İsmini Giriniz" name="kaynakIsim" />
+                    <input type="text" required maxlength="4000" placeholder="URL'yi giriniz" name="tekLink"/>
+                    <input type="hidden" value="" class="hidden" name="filmId"/>
+                    <input type="submit" class="btn btn-success btn-block" value="Ekle" />
+                </form>
+
+            </div>
+            <div class="col-md-12" id="linkTur2" style="display:none;">
+                <form action="javascript:void(0);">
+                    <input type="text" maxlength="60" required placeholder="Kaynağın İsmini Giriniz" name="kaynakIsim"/>
+                    <input type="text" required maxlength="4000" placeholder="Altyazı URL'sini giriniz" name="altyazi"/>
+                    <input type="text" required maxlength="4000" placeholder="Dublaj URL'sini giriniz" name="dublaj"/>
+                    <input type="hidden" value="" class="hidden" name="filmId"/>
+                    <input type="submit" class="btn btn-success btn-block" value="Ekle"  />
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@section script{
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        function filterFunction() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("myDropdown");
+            a = div.getElementsByTagName("a");
+            for (i = 0; i < a.length; i++) {
+                txtValue = a[i].textContent || a[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
+            }
+        }
+        var secilenFilmId = "";
+        function FilmLinkCek(id) {
+            $.ajax({
+                url: "/Admin/getFilmLink?id=" + id,
+                type: "POST",
+                success: function (e) {
+                    $('#LinkEkleDiv').html(e);
+                }, error: function () {
+                    $('#LinkEkleDiv').html("Hata Oluştu");
+                }
+            });
+        }
+        $('#myDropdown').on('click', 'a', function () {
+            //Film seçildi
+            $('#myDropdown').removeClass("show");
+            var data = $(this).data("id");
+            secilenFilmId = data;
+            FilmLinkCek(data);
+
+            //diğer divleri gizle
+            $('#LinkEkleYeniDiv').hide();
+            $('#linkTur').val("");
+            $('#linkTur1').hide();
+            $('#linkTur2').hide();
+        });
+        
+        $('#LinkEkleDiv').on('click', '.linki-sil', function () {
+            var data = $(this).data("id");
+            var btn = $(this);
+            $.ajax({
+                url: "/Admin/FilmLinkSil?id=" + data,
+                type: "GET",
+                success: function (e) {
+                    btn.parent().parent().remove();
+                }, error: function () {
+                    btn.text("Hata Oluştu");
+                }
+            });
+        });
+        //Ekleme formunu göster
+        $('#LinkEkleDiv ').on('click', 'a', function () {
+            $('#LinkEkleYeniDiv').show();
+        });
+
+        function dropdownChanged() {
+            var tur = $('#linkTur :selected').val();
+            if (tur == "tur1") {
+                $('#linkTur1 .hidden').first().val(secilenFilmId);
+                $('#linkTur2 .hidden').first().val("");
+                $('#linkTur1').show();
+                $('#linkTur2').hide();
+            } else {
+                $('#linkTur2 .hidden').first().val(secilenFilmId);
+                $('#linkTur1 .hidden').first().val("");
+                $('#linkTur1').hide();
+                $('#linkTur2').show();
+            }
+        }
+        $("#linkTur1 form").submit(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/FilmeYeniLinkEkle",
+                data: $(this).serialize(),
+                success: function () {
+                    FilmLinkCek(secilenFilmId);
+
+                }
+            });
+        });
+        $("#linkTur2 form").submit(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/FilmeYeniLinkEkle",
+                data: $(this).serialize(),
+                success: function () {
+                    FilmLinkCek(secilenFilmId);
+
+                }
+            });
+        });
+    </script>
+    }
