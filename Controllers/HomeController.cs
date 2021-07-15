@@ -55,7 +55,7 @@ namespace FilmFree.Controllers
         {
 
             var captcha = Request.Form["g-recaptcha-response"];
-            const string secret = "6LcQ7RobAAAAAPklaszjhlkp7sI6C5QwUX-Ih4I6";
+            const string secret = "";
             var restUrl = string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", secret, captcha);
             WebRequest req = WebRequest.Create(restUrl);
             HttpWebResponse resp = req.GetResponse() as HttpWebResponse;
