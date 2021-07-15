@@ -38,3 +38,4 @@ Anasayfa Slayt Ayarları: Anasayfada bulunan slaytı güncel tutmak için düzen
 Filme Erişimi Kapat: Filmlere erişimi kısıtlayabilir veya kısıtlanan filmleri erişime açabilir.
 Kullanıcı Engelle: Kullanıcıları engelleyebilir.
 Tür Ayarları: Film türlerini düzenleyebilir.
+
